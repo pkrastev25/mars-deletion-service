@@ -1,0 +1,61 @@
+stages:
+  - build
+  - test
+  - deploy
+
+
+variables:
+  DOCKER_HOST: "tcp://localhost:2375"
+  DOCKER_REGISTRY: "nexus.informatik.haw-hamburg.de"
+  SERVICE_NAME: "deletion-svc"
+
+
+cache:
+  untracked: true
+
+
+build:
+  stage: build
+  image: ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
+  tags:
+    - k8s
+  script:
+    - dotnet clean -c Release -v minimal /maxcpucount
+    - dotnet build -c Release -v minimal /maxcpucount
+
+  artifacts:
+    untracked: true
+
+
+test:
+  stage: test
+  image: ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
+  tags:
+    - k8s
+  script:
+   - cd Tests
+   - dotnet test -c Release -v minimal /maxcpucount
+
+deploy:
+  stage: deploy
+  image: ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
+  services:
+    - ${DOCKER_REGISTRY}/docker:stable-dind
+  tags:
+    - k8s
+  only:
+    - master
+  script:
+    - dotnet publish -o ./out -v minimal /maxcpucount
+    # Log in to Nexus Docker registry and push the image.
+    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
+    - docker build -t $SERVICE_NAME:latest .
+
+    # Set three tags: 'latest' (to identify newest build), version number und commit ID.
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
+
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID    
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
