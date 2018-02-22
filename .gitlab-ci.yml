@@ -38,7 +38,9 @@ test:
 
 deploy:
   stage: deploy
-  image: ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
+  image:
+    - ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
+    - ${DOCKER_REGISTRY}/docker:stable-dind
   services:
     - ${DOCKER_REGISTRY}/docker:stable-dind
   tags:
