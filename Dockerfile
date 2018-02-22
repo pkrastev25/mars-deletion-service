@@ -4,7 +4,7 @@ FROM nexus.informatik.haw-hamburg.de/microsoft/aspnetcore:2.0
 EXPOSE 8080
 
 # Copy the sources into the Docker container.
-ADD ./out /out 
+ADD ./mars-deletion-svc/out /out 
 
 # Build and run the program on container startup.
 WORKDIR /out
