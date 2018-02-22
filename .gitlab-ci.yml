@@ -33,7 +33,7 @@ test:
   tags:
     - k8s
   script:
-   - cd Tests
+   - cd Test
    - dotnet test -c Release -v minimal /maxcpucount
 
 deploy:
