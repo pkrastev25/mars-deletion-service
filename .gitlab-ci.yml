@@ -22,10 +22,10 @@ build:
   script:
     - dotnet clean -c Release -v minimal /maxcpucount
     - dotnet build -c Release -v minimal /maxcpucount
+    - dotnet publish -o ./out -v minimal /maxcpucount
 
   artifacts:
     untracked: true
-
 
 test:
   stage: test
@@ -38,9 +38,7 @@ test:
 
 deploy:
   stage: deploy
-  image:
-    - ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
-    - ${DOCKER_REGISTRY}/docker:stable-dind
+  image: ${DOCKER_REGISTRY}/docker:stable-dind
   services:
     - ${DOCKER_REGISTRY}/docker:stable-dind
   tags:
@@ -48,7 +46,6 @@ deploy:
   only:
     - master
   script:
-    - dotnet publish -o ./out -v minimal /maxcpucount
     # Log in to Nexus Docker registry and push the image.
     - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
     - docker build -t $SERVICE_NAME:latest .
