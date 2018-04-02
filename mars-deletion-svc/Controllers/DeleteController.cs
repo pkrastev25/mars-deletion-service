@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using mars_deletion_svc.DependantResource.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace mars_deletion_svc.Controllers
@@ -6,6 +7,15 @@ namespace mars_deletion_svc.Controllers
     [Route("api/[controller]")]
     public class DeleteController : Controller
     {
+        private readonly IDependantResourcesHandler _dependantResourcesHandler;
+
+        public DeleteController(
+            IDependantResourcesHandler dependantResourcesHandler
+        )
+        {
+            _dependantResourcesHandler = dependantResourcesHandler;
+        }
+
         [HttpDelete("{resourceType}/{resourceId}")]
         public async Task<IActionResult> DeleteResource(
             string resourceType,
@@ -36,7 +46,11 @@ namespace mars_deletion_svc.Controllers
                 case "resultConfig":
                 case "simPlan":
                 case "simRun":
-                    return BadRequest("Not implemented yet!");
+                    return await _dependantResourcesHandler.DeleteDependantResources(
+                        resourceType,
+                        resourceId,
+                        projectId
+                    );
                 case "resultData":
                     return BadRequest("Not implemented yet!");
                 default:

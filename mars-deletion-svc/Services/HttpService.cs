@@ -13,6 +13,11 @@ namespace mars_deletion_svc.Services
             _httpClient = httpClient;
         }
 
+        public async Task<HttpResponseMessage> GetAsync(string requestUri)
+        {
+            return await _httpClient.GetAsync(requestUri);
+        }
+
         public async Task<HttpResponseMessage> DeleteAsync(string requestUri)
         {
             return await _httpClient.DeleteAsync(requestUri);
