@@ -8,6 +8,8 @@ namespace mars_deletion_svc.Services.Inerfaces
 
         void LogSkipEvent(string message);
 
+        void LogWarningEvent(string message);
+
         void LogErrorEvent(Exception error);
     }
 }

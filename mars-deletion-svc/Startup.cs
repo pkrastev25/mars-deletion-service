@@ -3,6 +3,16 @@ using mars_deletion_svc.DependantResource;
 using mars_deletion_svc.DependantResource.Interfaces;
 using mars_deletion_svc.MarkingService;
 using mars_deletion_svc.MarkingService.Interfaces;
+using mars_deletion_svc.ResourceTypes.Metadata;
+using mars_deletion_svc.ResourceTypes.Metadata.Interfaces;
+using mars_deletion_svc.ResourceTypes.ResultConfig;
+using mars_deletion_svc.ResourceTypes.ResultConfig.Interfaces;
+using mars_deletion_svc.ResourceTypes.Scenario;
+using mars_deletion_svc.ResourceTypes.Scenario.Interfaces;
+using mars_deletion_svc.ResourceTypes.SimPlan;
+using mars_deletion_svc.ResourceTypes.SimPlan.Interfaces;
+using mars_deletion_svc.ResourceTypes.SimRun;
+using mars_deletion_svc.ResourceTypes.SimRun.Interfaces;
 using mars_deletion_svc.Services;
 using mars_deletion_svc.Services.Inerfaces;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +44,11 @@ namespace mars_deletion_svc
             // Clients
             services.AddSingleton<HttpClient>();
             services.AddTransient<IMarkingServiceClient, MarkingServiceClient>();
+            services.AddTransient<IMetadataClient, MetadataClient>();
+            services.AddTransient<IScenarioClient, ScenarioClient>();
+            services.AddTransient<IResultConfigClient, ResultConfigClient>();
+            services.AddTransient<ISimPlanClient, SimPlanClient>();
+            services.AddTransient<ISimRunClient, SimRunClient>();
 
             // Handlers
             services.AddTransient<IDependantResourcesHandler, DependantResourcesHandler>();

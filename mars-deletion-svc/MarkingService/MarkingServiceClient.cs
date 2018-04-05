@@ -5,7 +5,7 @@ using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Interfaces;
 using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.Services.Inerfaces;
-using Newtonsoft.Json;
+using mars_deletion_svc.Utils;
 
 namespace mars_deletion_svc.MarkingService
 {
@@ -33,9 +33,7 @@ namespace mars_deletion_svc.MarkingService
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-
-                    return JsonConvert.DeserializeObject<IEnumerable<DependantResourceModel>>(jsonResponse);
+                    return await response.Deserialize<IEnumerable<DependantResourceModel>>();
                 case HttpStatusCode.Conflict:
                     throw new ResourceConflictException(
                         $"Failed to get dependant resources for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc, because some of the resources are locked and cannot be used!"

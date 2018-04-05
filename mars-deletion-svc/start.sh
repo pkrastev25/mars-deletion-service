@@ -5,6 +5,8 @@ rm -rf out
 
 dotnet publish -o out
 
+cd ..
+
 docker build -t ${DOCKER_REGISTRY}/${SERVICE_NAME}:dev .
 docker push ${DOCKER_REGISTRY}/${SERVICE_NAME}:dev
 
