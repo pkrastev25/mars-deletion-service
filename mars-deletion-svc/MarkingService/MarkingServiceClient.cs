@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
@@ -20,7 +21,7 @@ namespace mars_deletion_svc.MarkingService
             _httpService = httpService;
         }
 
-        public async Task<IEnumerable<DependantResourceModel>> GetDependantResources(
+        public async Task<IEnumerable<DependantResourceModel>> CreateMarkSession(
             string resourceType,
             string resourceId,
             string projectId
@@ -42,6 +43,19 @@ namespace mars_deletion_svc.MarkingService
                     throw new FailedToGetDependantResourcesException(
                         $"Failed to get dependant resources for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc!"
                     );
+            }
+        }
+
+        public async Task DeleteMarkingSession(string resourceId)
+        {
+            var response = await _httpService.DeleteAsync(
+                $"http://marking-svc/api/unmark/{resourceId}"
+            );
+
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new Exception("ERROR");
             }
         }
     }

@@ -54,7 +54,7 @@ namespace mars_deletion_svc.DependantResource
             try
             {
                 var dependantResources =
-                    await _markingServiceClient.GetDependantResources(resourceType, resourceId, projectId);
+                    await _markingServiceClient.CreateMarkSession(resourceType, resourceId, projectId);
                 dependantResources = dependantResources.Reverse();
 
                 foreach (var dependantResourceModel in dependantResources)
@@ -100,12 +100,14 @@ namespace mars_deletion_svc.DependantResource
                         }
                     }
                 }
+                await _markingServiceClient.DeleteMarkingSession(resourceId);
 
-                return new OkObjectResult(dependantResources);
+                return new OkResult();
             }
             catch (Exception e)
             {
                 _loggerService.LogErrorEvent(e);
+                await _markingServiceClient.DeleteMarkingSession(resourceId);
 
                 return _errorService.GetStatusCodeResultForError(e);
             }
