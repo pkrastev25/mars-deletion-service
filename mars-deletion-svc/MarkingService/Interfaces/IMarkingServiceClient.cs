@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using mars_deletion_svc.MarkingService.Models;
+﻿using System.Threading.Tasks;
+using mars_deletion_svc.MarkSession.Models;
 
 namespace mars_deletion_svc.MarkingService.Interfaces
 {
     public interface IMarkingServiceClient
     {
-        Task<IEnumerable<DependantResourceModel>> CreateMarkSession(
+        Task<MarkSessionModel> CreateMarkSession(
             string resourceType,
             string resourceId,
             string projectId
         );
 
+        Task<MarkSessionModel> GetMarkSessionById(
+            string markSessionId
+        );
+
         Task DeleteMarkingSession(
-            string resourceId
+            string markSessionId
         );
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.ResourceTypes.ResultConfig.Interfaces;
 using mars_deletion_svc.Services.Inerfaces;
+using mars_deletion_svc.Utils;
 
 namespace mars_deletion_svc.ResourceTypes.ResultConfig
 {
@@ -27,12 +27,11 @@ namespace mars_deletion_svc.ResourceTypes.ResultConfig
                 $"http://resultcfg-svc/api/ResultConfigs/{dependantResourceModel.ResourceId}"
             );
 
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                throw new FailedToDeleteResourceException(
-                    $"Failed to delete {dependantResourceModel} from resultcfg-svc!"
-                );
-            }
+            response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
+                new FailedToDeleteResourceException(
+                    $"Failed to delete {dependantResourceModel} from resultcfg-svc! The response status code is {response.StatusCode}"
+                )
+            );
 
             _loggerService.LogDeleteEvent(dependantResourceModel.ToString());
         }

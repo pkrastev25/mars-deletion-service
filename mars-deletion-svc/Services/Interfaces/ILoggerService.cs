@@ -6,10 +6,6 @@ namespace mars_deletion_svc.Services.Inerfaces
     {
         void LogDeleteEvent(string message);
 
-        void LogSkipEvent(string message);
-
-        void LogWarningEvent(string message);
-
         void LogErrorEvent(Exception error);
     }
 }

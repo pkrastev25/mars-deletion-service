@@ -5,6 +5,9 @@ namespace mars_deletion_svc.ResourceTypes.SimRun.Interfaces
 {
     public interface ISimRunClient
     {
-        Task DeleteResource(DependantResourceModel dependantResourceModel);
+        Task DeleteResource(
+            DependantResourceModel dependantResourceModel,
+            string projectId
+        );
     }
 }

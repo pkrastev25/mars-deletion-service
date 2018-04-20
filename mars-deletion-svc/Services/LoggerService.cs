@@ -10,16 +10,6 @@ namespace mars_deletion_svc.Services
             Console.WriteLine($"[DELETE] {message}");
         }
 
-        public void LogSkipEvent(string message)
-        {
-            Console.WriteLine($"[SKIP] {message}");
-        }
-
-        public void LogWarningEvent(string message)
-        {
-            Console.WriteLine($"[WARNING] {message}");
-        }
-
         public void LogErrorEvent(Exception error)
         {
             Console.Error.WriteLine($"[ERROR] {error.Message}");
