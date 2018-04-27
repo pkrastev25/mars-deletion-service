@@ -21,7 +21,9 @@ namespace mars_deletion_svc.ResourceTypes.ResultConfig
             _loggerService = loggerService;
         }
 
-        public async Task DeleteResource(DependantResourceModel dependantResourceModel)
+        public async Task DeleteResource(
+            DependantResourceModel dependantResourceModel
+        )
         {
             var response = await _httpService.DeleteAsync(
                 $"http://resultcfg-svc/api/ResultConfigs/{dependantResourceModel.ResourceId}"

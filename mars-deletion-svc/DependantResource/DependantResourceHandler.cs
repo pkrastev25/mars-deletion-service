@@ -40,7 +40,9 @@ namespace mars_deletion_svc.DependantResource
             _resultDataClient = resultDataClient;
         }
 
-        public async Task DeleteDependantResourcesForMarkSession(MarkSessionModel markSessionModel)
+        public async Task DeleteDependantResourcesForMarkSession(
+            MarkSessionModel markSessionModel
+        )
         {
             var taskList = new List<Task>();
 

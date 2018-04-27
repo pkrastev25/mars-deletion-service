@@ -27,12 +27,16 @@ namespace mars_deletion_svc.MarkSession
             _loggerService = loggerService;
         }
 
-        public async Task DeleteMarkSessionAndDependantResources(MarkSessionModel markSessionModel)
+        public async Task DeleteMarkSessionAndDependantResources(
+            MarkSessionModel markSessionModel
+        )
         {
             await Task.Run(() => BackgroundJob.Enqueue(() => StartDeletionProcess(markSessionModel.MarkSessionId)));
         }
 
-        public async Task StartDeletionProcess(string markSessionId)
+        public async Task StartDeletionProcess(
+            string markSessionId
+        )
         {
             var isMarkSessionDeleted = false;
             var taskExecutionDelayInSeconds = 1;

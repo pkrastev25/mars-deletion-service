@@ -21,7 +21,9 @@ namespace mars_deletion_svc.ResourceTypes.Metadata
             _loggerService = loggerService;
         }
 
-        public async Task DeleteResource(DependantResourceModel dependantResourceModel)
+        public async Task DeleteResource(
+            DependantResourceModel dependantResourceModel
+        )
         {
             var response = await _httpService.DeleteAsync(
                 $"http://file-svc/files/{dependantResourceModel.ResourceId}"

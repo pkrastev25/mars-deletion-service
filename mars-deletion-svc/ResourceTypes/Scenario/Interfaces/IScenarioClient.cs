@@ -5,6 +5,8 @@ namespace mars_deletion_svc.ResourceTypes.Scenario.Interfaces
 {
     public interface IScenarioClient
     {
-        Task DeleteResource(DependantResourceModel dependantResourceModel);
+        Task DeleteResource(
+            DependantResourceModel dependantResourceModel
+        );
     }
 }

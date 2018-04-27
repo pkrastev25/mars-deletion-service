@@ -5,6 +5,8 @@ namespace mars_deletion_svc.MarkSession.Interfaces
 {
     public interface IMarkSessionHandler
     {
-        Task DeleteMarkSessionAndDependantResources(MarkSessionModel markSessionModel);
+        Task DeleteMarkSessionAndDependantResources(
+            MarkSessionModel markSessionModel
+        );
     }
 }

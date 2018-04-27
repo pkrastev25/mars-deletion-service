@@ -21,7 +21,9 @@ namespace mars_deletion_svc.ResourceTypes.Scenario
             _loggerService = loggerService;
         }
 
-        public async Task DeleteResource(DependantResourceModel dependantResourceModel)
+        public async Task DeleteResource(
+            DependantResourceModel dependantResourceModel
+        )
         {
             var response = await _httpService.DeleteAsync(
                 $"http://scenario-svc/scenarios/{dependantResourceModel.ResourceId}"

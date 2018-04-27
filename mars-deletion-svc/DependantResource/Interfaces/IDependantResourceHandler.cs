@@ -5,6 +5,8 @@ namespace mars_deletion_svc.DependantResource.Interfaces
 {
     public interface IDependantResourceHandler
     {
-        Task DeleteDependantResourcesForMarkSession(MarkSessionModel markSessionModel);
+        Task DeleteDependantResourcesForMarkSession(
+            MarkSessionModel markSessionModel
+        );
     }
 }

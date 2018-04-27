@@ -4,7 +4,9 @@ namespace mars_deletion_svc.Exceptions
 {
     public class FailedToDeleteMarkSessionException : Exception
     {
-        public FailedToDeleteMarkSessionException(string message) : base(message)
+        public FailedToDeleteMarkSessionException(
+            string message
+        ) : base(message)
         {
         }
     }

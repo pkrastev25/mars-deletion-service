@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace mars_deletion_svc
 {
@@ -57,6 +58,7 @@ namespace mars_deletion_svc
             // Services
             services.AddTransient<IHttpService, HttpService>();
             services.AddTransient<ILoggerService, LoggerService>();
+            services.AddSingleton<IHostedService, HostedStartupService>();
 
             // Clients
             services.AddSingleton<HttpClient>();

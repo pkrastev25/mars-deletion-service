@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using mars_deletion_svc.Controllers.Interfaces;
+using mars_deletion_svc.MarkingService;
 using mars_deletion_svc.MarkingService.Interfaces;
 using mars_deletion_svc.MarkSession.Interfaces;
 
@@ -28,7 +29,8 @@ namespace mars_deletion_svc.Controllers
             var markSessionModel = await _markingServiceClient.CreateMarkSession(
                 resourceType,
                 resourceId,
-                projectId
+                projectId,
+                MarkingServiceClient.MarkSessionTypeToBeDeleted
             );
 
             await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);

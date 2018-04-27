@@ -6,7 +6,9 @@ namespace mars_deletion_svc.Utils
 {
     public static class TaskUtil
     {
-        public static Task ExecuteTasksInParallel(IEnumerable<Task> taskList)
+        public static Task ExecuteTasksInParallel(
+            IEnumerable<Task> taskList
+        )
         {
             var allTasks = Task.WhenAll(taskList);
 

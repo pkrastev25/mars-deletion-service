@@ -5,12 +5,16 @@ namespace mars_deletion_svc.Services
 {
     public class LoggerService : ILoggerService
     {
-        public void LogDeleteEvent(string message)
+        public void LogDeleteEvent(
+            string message
+        )
         {
             Console.WriteLine($"[DELETE] {message}");
         }
 
-        public void LogErrorEvent(Exception error)
+        public void LogErrorEvent(
+            Exception error
+        )
         {
             Console.Error.WriteLine($"[ERROR] {error.Message}");
             Console.Error.WriteLine(error.StackTrace);

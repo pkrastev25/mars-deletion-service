@@ -5,10 +5,17 @@ namespace mars_deletion_svc.Services.Inerfaces
 {
     public interface IHttpService
     {
-        Task<HttpResponseMessage> PostAsync<T>(string requestUri, T newModel);
+        Task<HttpResponseMessage> PostAsync<T>(
+            string requestUri,
+            T newModel
+        );
 
-        Task<HttpResponseMessage> GetAsync(string requestUri);
+        Task<HttpResponseMessage> GetAsync(
+            string requestUri
+        );
 
-        Task<HttpResponseMessage> DeleteAsync(string requestUri);
+        Task<HttpResponseMessage> DeleteAsync(
+            string requestUri
+        );
     }
 }

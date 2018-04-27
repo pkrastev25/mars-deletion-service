@@ -5,6 +5,8 @@ namespace mars_deletion_svc.ResourceTypes.ResultData.Interfaces
 {
     public interface IResultDataClient
     {
-        Task DeleteResource(DependantResourceModel dependantResourceModel);
+        Task DeleteResource(
+            DependantResourceModel dependantResourceModel
+        );
     }
 }

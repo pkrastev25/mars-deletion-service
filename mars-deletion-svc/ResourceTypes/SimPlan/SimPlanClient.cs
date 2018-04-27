@@ -63,7 +63,7 @@ namespace mars_deletion_svc.ResourceTypes.SimPlan
             }
 
             throw new FailedToGetResourceException(
-                $"Failed to get simPlan with id: {simPlanId}, projectId: {projectId} from sim-runner-svc!"
+                $"Failed to get simPlan with id: {simPlanId}, projectId: {projectId} from sim-runner-svc! The response status code is {response.StatusCode}"
             );
         }
     }

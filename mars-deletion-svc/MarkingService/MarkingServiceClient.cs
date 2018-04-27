@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Interfaces;
@@ -10,7 +11,7 @@ namespace mars_deletion_svc.MarkingService
 {
     public class MarkingServiceClient : IMarkingServiceClient
     {
-        private const string MarkSessionTypeToBeDeleted = "TO_BE_DELETED";
+        public const string MarkSessionTypeToBeDeleted = "TO_BE_DELETED";
 
         private readonly IHttpService _httpService;
 
@@ -24,11 +25,12 @@ namespace mars_deletion_svc.MarkingService
         public async Task<MarkSessionModel> CreateMarkSession(
             string resourceType,
             string resourceId,
-            string projectId
+            string projectId,
+            string markSessionType
         )
         {
             var response = await _httpService.PostAsync(
-                $"http://marking-svc/api/markSession/{resourceType}/{resourceId}?markSessionType={MarkSessionTypeToBeDeleted}&projectId={projectId}",
+                $"http://marking-svc/api/markSession/{resourceType}/{resourceId}?markSessionType={markSessionType}&projectId={projectId}",
                 ""
             );
 
@@ -38,16 +40,18 @@ namespace mars_deletion_svc.MarkingService
                     return await response.Deserialize<MarkSessionModel>();
                 case HttpStatusCode.Conflict:
                     throw new ResourceConflictException(
-                        $"Failed to create mark session for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc, because it already exists or some of the resources are locked and cannot be used!"
+                        $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc, because it already exists or some of the resources are locked and cannot be used!"
                     );
                 default:
                     throw new FailedToCreateMarkSessionException(
-                        $"Failed to create mark session for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc! The response status code is {response.StatusCode}"
+                        $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc! The response status code is {response.StatusCode}"
                     );
             }
         }
 
-        public async Task<MarkSessionModel> GetMarkSessionById(string markSessionId)
+        public async Task<MarkSessionModel> GetMarkSessionById(
+            string markSessionId
+        )
         {
             var response = await _httpService.GetAsync(
                 $"http://marking-svc/api/markSession/{markSessionId}"
@@ -68,21 +72,41 @@ namespace mars_deletion_svc.MarkingService
             }
         }
 
-        public async Task DeleteMarkingSession(string markSessionId)
+        public async Task<IEnumerable<MarkSessionModel>> GetMarkSessionsByMarkSessionType(
+            string markSessionType
+        )
+        {
+            var response = await _httpService.GetAsync(
+                $"http://marking-svc/api/markSession?markSessionType={markSessionType}"
+            );
+
+            response.ThrowExceptionIfNotSuccessfulResponse(
+                new FailedToGetMarkSessionException(
+                    $"Failed to get mark sessions for type: {markSessionType} from marking-svc! The response status code is {response.StatusCode}"
+                )
+            );
+
+            if (response.IsEmptyResponse())
+            {
+                return new List<MarkSessionModel>();
+            }
+
+            return await response.Deserialize<List<MarkSessionModel>>();
+        }
+
+        public async Task DeleteMarkingSession(
+            string markSessionId
+        )
         {
             var response = await _httpService.DeleteAsync(
                 $"http://marking-svc/api/markSession/{markSessionId}"
             );
 
-            switch (response.StatusCode)
-            {
-                case HttpStatusCode.OK:
-                    break;
-                default:
-                    throw new FailedToDeleteMarkSessionException(
-                        $"Failed to delete mark session with id: {markSessionId} from marking-svc! The response status code is {response.StatusCode}"
-                    );
-            }
+            response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
+                new FailedToDeleteMarkSessionException(
+                    $"Failed to delete mark session with id: {markSessionId} from marking-svc! The response status code is {response.StatusCode}"
+                )
+            );
         }
     }
 }

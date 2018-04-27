@@ -4,7 +4,9 @@ namespace mars_deletion_svc.Utils
 {
     public static class EnumUtil
     {
-        public static bool DoesResourceTypeExist(string resourceType)
+        public static bool DoesResourceTypeExist(
+            string resourceType
+        )
         {
             switch (resourceType)
             {

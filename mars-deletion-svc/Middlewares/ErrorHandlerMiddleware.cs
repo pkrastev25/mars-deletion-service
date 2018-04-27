@@ -23,7 +23,9 @@ namespace mars_deletion_svc.Middlewares
             _loggerService = loggerService;
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task Invoke(
+            HttpContext httpContext
+        )
         {
             try
             {
@@ -36,15 +38,20 @@ namespace mars_deletion_svc.Middlewares
             }
         }
 
-        private Task HandleException(HttpContext httpContext, Exception exception)
+        private Task HandleException(
+            HttpContext httpContext,
+            Exception exception
+        )
         {
-            var errorResponseMessage = "";
+            var errorResponseMessage = exception.Message;
             httpContext.Response.StatusCode = GetStatusCodeForError(exception);
 
             return httpContext.Response.WriteAsync(errorResponseMessage);
         }
 
-        private int GetStatusCodeForError(Exception exception)
+        private int GetStatusCodeForError(
+            Exception exception
+        )
         {
             switch (exception)
             {
