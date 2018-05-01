@@ -62,5 +62,16 @@ namespace mars_deletion_svc.Utils
                     return false;
             }
         }
+
+        public static async Task<string> IncludeStatusCodeAndMessageFromResponse(
+            this HttpResponseMessage httpResponseMessage
+        )
+        {
+            var responseMessage = await httpResponseMessage.Content.ReadAsStringAsync();
+            responseMessage = string.IsNullOrEmpty(responseMessage) ? "None" : responseMessage;
+            
+            return
+                $" \n [REASON] response status code: {httpResponseMessage.StatusCode}, response message: {responseMessage}";
+        }
     }
 }

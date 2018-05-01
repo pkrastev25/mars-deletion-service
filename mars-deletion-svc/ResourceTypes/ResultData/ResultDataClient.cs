@@ -25,13 +25,14 @@ namespace mars_deletion_svc.ResourceTypes.ResultData
             DependantResourceModel dependantResourceModel
         )
         {
-            var response = await _httpService.GetAsync(
-                $"http://database-utility-svc/delete/mongodb-result/{dependantResourceModel.ResourceId}"
+            var response = await _httpService.DeleteAsync(
+                $"http://database-utility-svc:8090/delete/mongodb-result/{dependantResourceModel.ResourceId}"
             );
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                 new FailedToDeleteResourceException(
-                    $"Failed to delete {dependantResourceModel} from database-util-svc! The response status code is {response.StatusCode}"
+                    $"Failed to delete {dependantResourceModel} from database-util-svc!" +
+                    await response.IncludeStatusCodeAndMessageFromResponse()
                 )
             );
 

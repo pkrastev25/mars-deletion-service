@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.Services.Inerfaces;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace mars_deletion_svc.Middlewares
 {
@@ -43,10 +44,11 @@ namespace mars_deletion_svc.Middlewares
             Exception exception
         )
         {
-            var errorResponseMessage = exception.Message;
+            var result = JsonConvert.SerializeObject(new {error = exception.Message});
+            httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = GetStatusCodeForError(exception);
 
-            return httpContext.Response.WriteAsync(errorResponseMessage);
+            return httpContext.Response.WriteAsync(result);
         }
 
         private int GetStatusCodeForError(

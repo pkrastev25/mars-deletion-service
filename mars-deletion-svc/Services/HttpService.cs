@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using mars_deletion_svc.Services.Inerfaces;
@@ -22,21 +23,27 @@ namespace mars_deletion_svc.Services
             T newModel
         )
         {
-            return await _httpClient.PostAsync(requestUri, CreateStringContent(newModel));
+            return await ExecuteRequest(
+                _httpClient.PostAsync(requestUri, CreateStringContent(newModel))
+            );
         }
 
         public async Task<HttpResponseMessage> GetAsync(
             string requestUri
         )
         {
-            return await _httpClient.GetAsync(requestUri);
+            return await ExecuteRequest(
+                _httpClient.GetAsync(requestUri)
+            );
         }
 
         public async Task<HttpResponseMessage> DeleteAsync(
             string requestUri
         )
         {
-            return await _httpClient.DeleteAsync(requestUri);
+            return await ExecuteRequest(
+                _httpClient.DeleteAsync(requestUri)
+            );
         }
 
         private StringContent CreateStringContent<T>(
@@ -48,6 +55,25 @@ namespace mars_deletion_svc.Services
                 Encoding.UTF8,
                 "application/json"
             );
+        }
+
+        private async Task<HttpResponseMessage> ExecuteRequest(
+            Task<HttpResponseMessage> request
+        )
+        {
+            try
+            {
+                return await request;
+            }
+            catch (Exception e)
+            {
+                if (!string.IsNullOrEmpty(e.InnerException?.Message))
+                {
+                    throw new Exception($"{e.Message} {e.InnerException.Message}");
+                }
+
+                throw;
+            }
         }
     }
 }

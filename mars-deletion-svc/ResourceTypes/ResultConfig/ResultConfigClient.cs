@@ -31,7 +31,8 @@ namespace mars_deletion_svc.ResourceTypes.ResultConfig
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                 new FailedToDeleteResourceException(
-                    $"Failed to delete {dependantResourceModel} from resultcfg-svc! The response status code is {response.StatusCode}"
+                    $"Failed to delete {dependantResourceModel} from resultcfg-svc!" +
+                    await response.IncludeStatusCodeAndMessageFromResponse()
                 )
             );
 

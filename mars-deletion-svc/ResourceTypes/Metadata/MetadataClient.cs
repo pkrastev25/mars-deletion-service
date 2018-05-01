@@ -31,7 +31,8 @@ namespace mars_deletion_svc.ResourceTypes.Metadata
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                 new FailedToDeleteResourceException(
-                    $"Failed to delete {dependantResourceModel} from file-svc! The response status code is {response.StatusCode}"
+                    $"Failed to delete {dependantResourceModel} from file-svc!" +
+                    await response.IncludeStatusCodeAndMessageFromResponse()
                 )
             );
 

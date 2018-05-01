@@ -9,15 +9,19 @@ namespace mars_deletion_svc.Services
             string message
         )
         {
-            Console.WriteLine($"[DELETE] {message}");
+            Console.WriteLine($"{IncludeTimestamp()} [DELETE] {message}");
         }
 
         public void LogErrorEvent(
             Exception error
         )
         {
-            Console.Error.WriteLine($"[ERROR] {error.Message}");
-            Console.Error.WriteLine(error.StackTrace);
+            Console.Error.WriteLine($"{IncludeTimestamp()} [ERROR] {error.Message}\n{error.StackTrace}");
+        }
+
+        private string IncludeTimestamp()
+        {
+            return $"- {DateTime.Now} -";
         }
     }
 }

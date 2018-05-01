@@ -35,7 +35,8 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
 
                 response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                     new FailedToDeleteResourceException(
-                        $"Failed to delete {dependantResourceModel} from sim-runner-svc! The response status code is {response.StatusCode}"
+                        $"Failed to delete {dependantResourceModel} from sim-runner-svc!" +
+                        await response.IncludeStatusCodeAndMessageFromResponse()
                     )
                 );
             }
@@ -63,7 +64,8 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
             }
 
             throw new FailedToGetResourceException(
-                $"Failed to get simRun with id: {simRunId}, projectId: {projectId} from sim-runner-svc! The response status code is {response.StatusCode}"
+                $"Failed to get simRun with id: {simRunId}, projectId: {projectId} from sim-runner-svc!" +
+                await response.IncludeStatusCodeAndMessageFromResponse()
             );
         }
     }
