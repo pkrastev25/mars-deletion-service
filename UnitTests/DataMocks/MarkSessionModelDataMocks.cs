@@ -7,9 +7,9 @@ namespace UnitTests.DataMocks
 {
     public static class MarkSessionModelDataMocks
     {
-        public static readonly string FullMarkSessionModel = JsonConvert.SerializeObject(CreateMockMarkSessionModel());
+        public static readonly string MockMarkSessionModelJson = JsonConvert.SerializeObject(MockMarkSessionModel());
 
-        private static MarkSessionModel CreateMockMarkSessionModel()
+        public static MarkSessionModel MockMarkSessionModel()
         {
             return new MarkSessionModel
             {
@@ -26,6 +26,26 @@ namespace UnitTests.DataMocks
                     {
                         ResourceId = "3f9c4a5b-c4db-4098-bea9-333cacdc58b1",
                         ResourceType = "scenario"
+                    },
+                    new DependantResourceModel
+                    {
+                        ResourceId = "3f9c4a5b-c4db-4098-bea9-333cacdc58b1",
+                        ResourceType = "resultConfig"
+                    },
+                    new DependantResourceModel
+                    {
+                        ResourceId = "3f9c4a5b-c4db-4098-bea9-333cacdc58b1",
+                        ResourceType = "simPlan"
+                    },
+                    new DependantResourceModel
+                    {
+                        ResourceId = "3f9c4a5b-c4db-4098-bea9-333cacdc58b1",
+                        ResourceType = "simRun"
+                    },
+                    new DependantResourceModel
+                    {
+                        ResourceId = "3f9c4a5b-c4db-4098-bea9-333cacdc58b1",
+                        ResourceType = "resultData"
                     }
                 }
             };

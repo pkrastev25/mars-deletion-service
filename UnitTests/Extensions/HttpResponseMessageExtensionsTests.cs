@@ -16,7 +16,7 @@ namespace UnitTests.Extensions
             // Arrange
             var httpResponseMessage = new HttpResponseMessage
             {
-                Content = new StringContent(MarkSessionModelDataMocks.FullMarkSessionModel)
+                Content = new StringContent(MarkSessionModelDataMocks.MockMarkSessionModelJson)
             };
             
             // Act
