@@ -12,7 +12,7 @@ namespace UnitTests.Controllers.Delete
     public class DeleteControllerTests
     {
         [Fact]
-        public async void DeleteResource_NoExceptions_ReturnsOkResult()
+        public async void DeleteResources_NoExceptions_ReturnsAcceptedResult()
         {
             // Arrange
             var resourceType = ResourceTypeEnum.Project;
@@ -29,18 +29,18 @@ namespace UnitTests.Controllers.Delete
             var deleteController = new DeleteController(deleteControllerHandler.Object);
 
             // Act
-            var result = await deleteController.DeleteResource(
+            var result = await deleteController.DeleteResources(
                 resourceType,
                 resourceId,
                 projectId
             );
 
             // Assert
-            Assert.IsType<OkResult>(result);
+            Assert.IsType<AcceptedResult>(result);
         }
 
         [Fact]
-        public async void DeleteResource_EmptyResourceType_ReturnsBadRequestObjectResult()
+        public async void DeleteResources_EmptyResourceType_ReturnsBadRequestObjectResult()
         {
             // Arrange
             var resourceType = "";
@@ -57,7 +57,7 @@ namespace UnitTests.Controllers.Delete
             var deleteController = new DeleteController(deleteControllerHandler.Object);
 
             // Act
-            var result = await deleteController.DeleteResource(
+            var result = await deleteController.DeleteResources(
                 resourceType,
                 resourceId,
                 projectId
