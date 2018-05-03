@@ -9,5 +9,9 @@ namespace mars_deletion_svc.Controllers.Interfaces
             string resourceId,
             string projectId
         );
+
+        Task DeleteMarkSessionAndDependantResources(
+            string markSessionId
+        );
     }
 }
