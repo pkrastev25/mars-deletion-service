@@ -12,16 +12,19 @@ namespace mars_deletion_svc.MarkSession
 {
     public class MarkSessionHandler : IMarkSessionHandler
     {
+        private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IMarkingServiceClient _markingServiceClient;
         private readonly IDependantResourceHandler _dependantResourceHandler;
         private readonly ILoggerService _loggerService;
 
         public MarkSessionHandler(
+            IBackgroundJobClient backgroundJobClient,
             IMarkingServiceClient markingServiceClient,
             IDependantResourceHandler dependantResourceHandler,
             ILoggerService loggerService
         )
         {
+            _backgroundJobClient = backgroundJobClient;
             _markingServiceClient = markingServiceClient;
             _dependantResourceHandler = dependantResourceHandler;
             _loggerService = loggerService;
@@ -32,7 +35,7 @@ namespace mars_deletion_svc.MarkSession
         )
         {
             await Task.Run(
-                () => BackgroundJob.Enqueue(
+                () => _backgroundJobClient.Enqueue(
                     () => StartDeletionProcess(markSessionModel.MarkSessionId)
                 )
             );

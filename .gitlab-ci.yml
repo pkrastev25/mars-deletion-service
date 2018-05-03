@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  - unitTests
   - deploy
 
 
@@ -27,13 +27,13 @@ build:
   artifacts:
     untracked: true
 
-test:
-  stage: test
+unitTests:
+  stage: unitTests
   image: ${DOCKER_REGISTRY}/microsoft/dotnet:2.0.0-sdk
   tags:
     - k8s
   script:
-   - cd Test
+   - cd UnitTests
    - dotnet test -c Release -v minimal /maxcpucount
 
 deploy:

@@ -69,6 +69,7 @@ namespace mars_deletion_svc
             services.AddTransient<ISimPlanClient, SimPlanClient>();
             services.AddTransient<ISimRunClient, SimRunClient>();
             services.AddTransient<IResultDataClient, ResultDataClient>();
+            services.AddSingleton<IBackgroundJobClient, BackgroundJobClient>();
 
             // Handlers
             services.AddTransient<IDeleteControllerHandler, DeleteControllerHandler>();
