@@ -19,7 +19,7 @@ namespace mars_deletion_svc.Controllers
         }
 
         [HttpDelete("{resourceType}/{resourceId}")]
-        public async Task<IActionResult> DeleteResource(
+        public async Task<IActionResult> DeleteResources(
             string resourceType,
             string resourceId,
             [FromQuery(Name = "projectId")] string projectId
@@ -58,7 +58,22 @@ namespace mars_deletion_svc.Controllers
                 projectId
             );
 
-            return Ok();
+            return Accepted();
+        }
+
+        [HttpDelete("markSession/{markSessionId}")]
+        public async Task<IActionResult> DeleteResourcesForMarkSession(
+            string markSessionId
+        )
+        {
+            if (string.IsNullOrEmpty(markSessionId))
+            {
+                return BadRequest("markSessionId is not specified!");
+            }
+
+            await _deleteControllerHandler.DeleteMarkSessionAndDependantResources(markSessionId);
+
+            return Accepted();
         }
     }
 }

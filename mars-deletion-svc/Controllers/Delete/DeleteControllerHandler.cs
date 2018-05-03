@@ -35,5 +35,14 @@ namespace mars_deletion_svc.Controllers
 
             await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
         }
+
+        public async Task DeleteMarkSessionAndDependantResources(
+            string markSessionId
+        )
+        {
+            var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
+
+            await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
+        }
     }
 }

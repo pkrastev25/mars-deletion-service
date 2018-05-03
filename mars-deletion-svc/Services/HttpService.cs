@@ -23,7 +23,7 @@ namespace mars_deletion_svc.Services
             T newModel
         )
         {
-            return await ExecuteRequest(
+            return await ExecuteRequestAndFormatExceptionIfThrown(
                 _httpClient.PostAsync(requestUri, CreateStringContent(newModel))
             );
         }
@@ -32,7 +32,7 @@ namespace mars_deletion_svc.Services
             string requestUri
         )
         {
-            return await ExecuteRequest(
+            return await ExecuteRequestAndFormatExceptionIfThrown(
                 _httpClient.GetAsync(requestUri)
             );
         }
@@ -41,7 +41,7 @@ namespace mars_deletion_svc.Services
             string requestUri
         )
         {
-            return await ExecuteRequest(
+            return await ExecuteRequestAndFormatExceptionIfThrown(
                 _httpClient.DeleteAsync(requestUri)
             );
         }
@@ -57,7 +57,7 @@ namespace mars_deletion_svc.Services
             );
         }
 
-        private async Task<HttpResponseMessage> ExecuteRequest(
+        private async Task<HttpResponseMessage> ExecuteRequestAndFormatExceptionIfThrown(
             Task<HttpResponseMessage> request
         )
         {
@@ -69,7 +69,10 @@ namespace mars_deletion_svc.Services
             {
                 if (!string.IsNullOrEmpty(e.InnerException?.Message))
                 {
-                    throw new Exception($"{e.Message} {e.InnerException.Message}");
+                    throw new Exception(
+                        $"{e.Message} {e.InnerException.Message}",
+                        e
+                    );
                 }
 
                 throw;

@@ -31,7 +31,11 @@ namespace mars_deletion_svc.MarkSession
             MarkSessionModel markSessionModel
         )
         {
-            await Task.Run(() => BackgroundJob.Enqueue(() => StartDeletionProcess(markSessionModel.MarkSessionId)));
+            await Task.Run(
+                () => BackgroundJob.Enqueue(
+                    () => StartDeletionProcess(markSessionModel.MarkSessionId)
+                )
+            );
         }
 
         public async Task StartDeletionProcess(
