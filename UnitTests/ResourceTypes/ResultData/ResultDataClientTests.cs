@@ -2,15 +2,15 @@
 using System.Net;
 using System.Net.Http;
 using mars_deletion_svc.Exceptions;
-using mars_deletion_svc.ResourceTypes.Metadata;
+using mars_deletion_svc.ResourceTypes.ResultData;
 using mars_deletion_svc.Services.Inerfaces;
 using Moq;
 using UnitTests._DataMocks;
 using Xunit;
 
-namespace UnitTests.ResourceTypes.Metadata
+namespace UnitTests.ResourceTypes.ResultData
 {
-    public class MetadataClientTests
+    public class ResultDataClientTests
     {
         [Fact]
         public async void DeleteResource_NotFoundStatusCode_NoExceptionThrown()
@@ -26,7 +26,7 @@ namespace UnitTests.ResourceTypes.Metadata
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var resultDataClient = new ResultDataClient(
                 httpService.Object,
                 logerService.Object
             );
@@ -35,7 +35,7 @@ namespace UnitTests.ResourceTypes.Metadata
             try
             {
                 // Act
-                await metadataClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
+                await resultDataClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace UnitTests.ResourceTypes.Metadata
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var resultDataClient = new ResultDataClient(
                 httpService.Object,
                 logerService.Object
             );
@@ -69,7 +69,7 @@ namespace UnitTests.ResourceTypes.Metadata
             try
             {
                 // Act
-                await metadataClient.DeleteResource(
+                await resultDataClient.DeleteResource(
                     DependantResourceDataMocks.MockDependantResourceModel()
                 );
             }

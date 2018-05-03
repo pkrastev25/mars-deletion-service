@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using mars_deletion_svc.MarkSession.Models;
 using mars_deletion_svc.Utils;
-using UnitTests.DataMocks;
+using UnitTests._DataMocks;
 using Xunit;
 
 namespace UnitTests.Extensions
@@ -18,7 +18,7 @@ namespace UnitTests.Extensions
             {
                 Content = new StringContent(MarkSessionModelDataMocks.MockMarkSessionModelJson)
             };
-            
+
             // Act
             var markSessionModel = await httpResponseMessage.Deserialize<MarkSessionModel>();
 
@@ -27,7 +27,7 @@ namespace UnitTests.Extensions
         }
 
         [Fact]
-        public void ThrowExceptionIfNotSuccessfulResponse_OkStatusCode_DoesNotThrowException()
+        public void ThrowExceptionIfNotSuccessfulResponse_OkStatusCode_NoExceptionThrown()
         {
             // Arrange
             var httpResponseMessage = new HttpResponseMessage
@@ -79,7 +79,7 @@ namespace UnitTests.Extensions
         }
 
         [Fact]
-        public void ThrowExceptionIfNotSuccessfulResponseOrNot404Response_NotFoundStatusCode_DoesNotThrowException()
+        public void ThrowExceptionIfNotSuccessfulResponseOrNot404Response_NotFoundStatusCode_NoExceptionThrown()
         {
             // Arrange
             var httpResponseMessage = new HttpResponseMessage
@@ -146,7 +146,7 @@ namespace UnitTests.Extensions
             // Assert
             Assert.True(result);
         }
-        
+
         [Fact]
         public void IsEmptyResponse_OkStatusCode_ReturnsFalse()
         {
@@ -162,7 +162,7 @@ namespace UnitTests.Extensions
             // Assert
             Assert.False(result);
         }
-        
+
         [Fact]
         public async void IncludeStatusCodeAndMessageFromResponse_ConflictStatusCode_ReturnsString()
         {

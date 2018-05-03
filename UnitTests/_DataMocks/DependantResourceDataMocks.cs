@@ -1,6 +1,6 @@
 ﻿using mars_deletion_svc.MarkingService.Models;
 
-namespace UnitTests.DataMocks
+namespace UnitTests._DataMocks
 {
     public static class DependantResourceDataMocks
     {

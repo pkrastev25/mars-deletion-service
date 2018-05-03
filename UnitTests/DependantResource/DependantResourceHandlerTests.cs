@@ -9,7 +9,7 @@ using mars_deletion_svc.ResourceTypes.Scenario.Interfaces;
 using mars_deletion_svc.ResourceTypes.SimPlan.Interfaces;
 using mars_deletion_svc.ResourceTypes.SimRun.Interfaces;
 using Moq;
-using UnitTests.DataMocks;
+using UnitTests._DataMocks;
 using Xunit;
 
 namespace UnitTests.DependantResource
@@ -17,9 +17,9 @@ namespace UnitTests.DependantResource
     public class DependantResourceHandlerTests
     {
         [Fact]
-        public async void DeleteDependantResourcesForMarkSession_MarkSessionModel_DoesNotThrowException()
+        public async void DeleteDependantResourcesForMarkSession_MarkSessionModel_NoExceptionThrown()
         {
-            // Assert
+            // Arrange
             var metadataClient = new Mock<IMetadataClient>();
             metadataClient
                 .Setup(m => m.DeleteResource(It.IsAny<DependantResourceModel>()))

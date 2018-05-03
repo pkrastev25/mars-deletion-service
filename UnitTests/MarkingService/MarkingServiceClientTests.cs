@@ -6,7 +6,7 @@ using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService;
 using mars_deletion_svc.Services.Inerfaces;
 using Moq;
-using UnitTests.DataMocks;
+using UnitTests._DataMocks;
 using Xunit;
 
 namespace UnitTests.MarkingService
@@ -52,16 +52,23 @@ namespace UnitTests.MarkingService
                 .Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.CreateMarkSession(
+                    It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>()
+                );
+            }
+            catch (ResourceConflictException e)
+            {
+                exception = e;
+            }
 
             // Assert
-            await Assert.ThrowsAsync<ResourceConflictException>(
-                // Act
-                async () =>
-                    await markingServiceClient.CreateMarkSession(
-                        It.IsAny<string>(), It.IsAny<string>(),
-                        It.IsAny<string>(), It.IsAny<string>()
-                    )
-            );
+            Assert.IsType<ResourceConflictException>(exception);
         }
 
         [Fact]
@@ -78,16 +85,23 @@ namespace UnitTests.MarkingService
                 .Setup(m => m.PostAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(httpResponseMessage));
             var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.CreateMarkSession(
+                    It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<string>(), It.IsAny<string>()
+                );
+            }
+            catch (FailedToCreateMarkSessionException e)
+            {
+                exception = e;
+            }
 
             // Assert
-            await Assert.ThrowsAsync<FailedToCreateMarkSessionException>(
-                // Act
-                async () =>
-                    await markingServiceClient.CreateMarkSession(
-                        It.IsAny<string>(), It.IsAny<string>(),
-                        It.IsAny<string>(), It.IsAny<string>()
-                    )
-            );
+            Assert.IsType<FailedToCreateMarkSessionException>(exception);
         }
 
         [Fact]
@@ -103,13 +117,20 @@ namespace UnitTests.MarkingService
                 .Setup(m => m.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.GetMarkSessionById(It.IsAny<string>());
+            }
+            catch (MarkSessionDoesNotExistException e)
+            {
+                exception = e;
+            }
 
             // Assert
-            await Assert.ThrowsAsync<MarkSessionDoesNotExistException>(
-                // Act
-                async () =>
-                    await markingServiceClient.GetMarkSessionById(It.IsAny<string>())
-            );
+            Assert.IsType<MarkSessionDoesNotExistException>(exception);
         }
 
         [Fact]
@@ -170,17 +191,24 @@ namespace UnitTests.MarkingService
                 .Setup(m => m.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.GetMarkSessionsByMarkSessionType(It.IsAny<string>());
+            }
+            catch (FailedToGetMarkSessionException e)
+            {
+                exception = e;
+            }
 
             // Assert
-            await Assert.ThrowsAsync<FailedToGetMarkSessionException>(
-                // Act
-                async () =>
-                    await markingServiceClient.GetMarkSessionsByMarkSessionType(It.IsAny<string>())
-            );
+            Assert.IsType<FailedToGetMarkSessionException>(exception);
         }
 
         [Fact]
-        public async void DeleteMarkingSession_NotFoundStatusCode_DoesNotThrowException()
+        public async void DeleteMarkingSession_NotFoundStatusCode_NoExceptionThrown()
         {
             // Arrange
             var httpService = new Mock<IHttpService>();
@@ -223,13 +251,20 @@ namespace UnitTests.MarkingService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.DeleteMarkingSession(It.IsAny<string>());
+            }
+            catch (FailedToDeleteMarkSessionException e)
+            {
+                exception = e;
+            }
 
             // Assert
-            await Assert.ThrowsAsync<FailedToDeleteMarkSessionException>(
-                // Act
-                async () =>
-                    await markingServiceClient.DeleteMarkingSession(It.IsAny<string>())
-            );
+            Assert.IsType<FailedToDeleteMarkSessionException>(exception);
         }
     }
 }

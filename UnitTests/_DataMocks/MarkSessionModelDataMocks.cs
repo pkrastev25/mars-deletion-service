@@ -3,7 +3,7 @@ using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.MarkSession.Models;
 using Newtonsoft.Json;
 
-namespace UnitTests.DataMocks
+namespace UnitTests._DataMocks
 {
     public static class MarkSessionModelDataMocks
     {

@@ -2,31 +2,31 @@
 using System.Net;
 using System.Net.Http;
 using mars_deletion_svc.Exceptions;
-using mars_deletion_svc.ResourceTypes.Metadata;
+using mars_deletion_svc.ResourceTypes.Scenario;
 using mars_deletion_svc.Services.Inerfaces;
 using Moq;
 using UnitTests._DataMocks;
 using Xunit;
 
-namespace UnitTests.ResourceTypes.Metadata
+namespace UnitTests.ResourceTypes.Scenario
 {
-    public class MetadataClientTests
+    public class ScenarioClientTests
     {
         [Fact]
-        public async void DeleteResource_NotFoundStatusCode_NoExceptionThrown()
+        public async void DeleteResource_OkStatusCode_NoExceptionThrown()
         {
             // Arrange
             var httpService = new Mock<IHttpService>();
             var httpResponseMessage = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.NotFound,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent("")
             };
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var scenarioClient = new ScenarioClient(
                 httpService.Object,
                 logerService.Object
             );
@@ -35,7 +35,7 @@ namespace UnitTests.ResourceTypes.Metadata
             try
             {
                 // Act
-                await metadataClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
+                await scenarioClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace UnitTests.ResourceTypes.Metadata
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var scenarioClient = new ScenarioClient(
                 httpService.Object,
                 logerService.Object
             );
@@ -69,7 +69,7 @@ namespace UnitTests.ResourceTypes.Metadata
             try
             {
                 // Act
-                await metadataClient.DeleteResource(
+                await scenarioClient.DeleteResource(
                     DependantResourceDataMocks.MockDependantResourceModel()
                 );
             }

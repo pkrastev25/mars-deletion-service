@@ -2,31 +2,35 @@
 using System.Net;
 using System.Net.Http;
 using mars_deletion_svc.Exceptions;
-using mars_deletion_svc.ResourceTypes.Metadata;
+using mars_deletion_svc.ResourceTypes.SimRun;
+using mars_deletion_svc.Services;
 using mars_deletion_svc.Services.Inerfaces;
 using Moq;
 using UnitTests._DataMocks;
 using Xunit;
 
-namespace UnitTests.ResourceTypes.Metadata
+namespace UnitTests.ResourceTypes.SimRun
 {
-    public class MetadataClientTests
+    public class SimRunClientTests
     {
         [Fact]
-        public async void DeleteResource_NotFoundStatusCode_NoExceptionThrown()
+        public async void DeleteResource_OkStatusCode_NoExceptionThrown()
         {
             // Arrange
             var httpService = new Mock<IHttpService>();
             var httpResponseMessage = new HttpResponseMessage
             {
-                StatusCode = HttpStatusCode.NotFound,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent("")
             };
+            httpService
+                .Setup(m => m.GetAsync(It.IsAny<string>()))
+                .ReturnsAsync(httpResponseMessage);
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
             var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var simRunClient = new SimRunClient(
                 httpService.Object,
                 logerService.Object
             );
@@ -35,7 +39,10 @@ namespace UnitTests.ResourceTypes.Metadata
             try
             {
                 // Act
-                await metadataClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
+                await simRunClient.DeleteResource(
+                    DependantResourceDataMocks.MockDependantResourceModel(),
+                    It.IsAny<string>()
+                );
             }
             catch (Exception e)
             {
@@ -47,7 +54,7 @@ namespace UnitTests.ResourceTypes.Metadata
         }
 
         [Fact]
-        public async void DeleteResource_InternalServerErrorStatusCode_ThrowsException()
+        public async void SimRunClient_InternalServerErrorStatusCode_ThrowsException()
         {
             // Arrange
             var httpService = new Mock<IHttpService>();
@@ -57,29 +64,30 @@ namespace UnitTests.ResourceTypes.Metadata
                 Content = new StringContent("")
             };
             httpService
-                .Setup(m => m.DeleteAsync(It.IsAny<string>()))
+                .Setup(m => m.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
+            var logerService = new LoggerService();
+            var simRunClient = new SimRunClient(
                 httpService.Object,
-                logerService.Object
+                logerService
             );
             Exception exception = null;
 
             try
             {
                 // Act
-                await metadataClient.DeleteResource(
-                    DependantResourceDataMocks.MockDependantResourceModel()
+                await simRunClient.DeleteResource(
+                    DependantResourceDataMocks.MockDependantResourceModel(),
+                    It.IsAny<string>()
                 );
             }
-            catch (FailedToDeleteResourceException e)
+            catch (FailedToGetResourceException e)
             {
                 exception = e;
             }
 
             // Assert
-            Assert.IsType<FailedToDeleteResourceException>(exception);
+            Assert.IsType<FailedToGetResourceException>(exception);
         }
     }
 }
