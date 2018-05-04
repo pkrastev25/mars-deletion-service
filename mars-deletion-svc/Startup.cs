@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
 using Hangfire;
 using Hangfire.Mongo;
+using mars_deletion_svc.BackgroundJobs;
+using mars_deletion_svc.BackgroundJobs.Interfaces;
 using mars_deletion_svc.Controllers;
 using mars_deletion_svc.Controllers.Interfaces;
 using mars_deletion_svc.DependantResource;
@@ -75,6 +77,7 @@ namespace mars_deletion_svc
             services.AddTransient<IDeleteControllerHandler, DeleteControllerHandler>();
             services.AddTransient<IMarkSessionHandler, MarkSessionHandler>();
             services.AddTransient<IDependantResourceHandler, DependantResourceHandler>();
+            services.AddTransient<IBackgroundJobsHandler, BackgroundJobsHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

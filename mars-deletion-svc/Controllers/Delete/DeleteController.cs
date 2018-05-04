@@ -52,13 +52,15 @@ namespace mars_deletion_svc.Controllers
                 return BadRequest("resourceType is not specified or is invalid!");
             }
 
-            await _deleteControllerHandler.CreateMarkSessionAndDeleteDependantResurces(
+            var backgroundJobId = await _deleteControllerHandler.CreateMarkSessionAndDeleteDependantResurces(
                 resourceType,
                 resourceId,
                 projectId
             );
 
-            return Accepted();
+            return Accepted(
+                value: backgroundJobId
+            );
         }
 
         [HttpDelete("markSession/{markSessionId}")]
@@ -71,9 +73,11 @@ namespace mars_deletion_svc.Controllers
                 return BadRequest("markSessionId is not specified!");
             }
 
-            await _deleteControllerHandler.DeleteMarkSessionAndDependantResources(markSessionId);
+            var backgroundJobId = await _deleteControllerHandler.DeleteMarkSessionAndDependantResources(markSessionId);
 
-            return Accepted();
+            return Accepted(
+                value: backgroundJobId
+            );
         }
     }
 }

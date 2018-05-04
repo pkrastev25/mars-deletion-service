@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using mars_deletion_svc.Controllers;
+﻿using mars_deletion_svc.Controllers;
 using mars_deletion_svc.Controllers.Interfaces;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.ResourceTypes.Enums;
@@ -25,7 +24,7 @@ namespace UnitTests.Controllers.Delete
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>()
-                )).Returns(Task.CompletedTask);
+                )).ReturnsAsync(It.IsAny<string>());
             var deleteController = new DeleteController(deleteControllerHandler.Object);
 
             // Act

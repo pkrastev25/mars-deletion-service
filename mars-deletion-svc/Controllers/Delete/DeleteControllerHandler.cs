@@ -20,7 +20,7 @@ namespace mars_deletion_svc.Controllers
             _markSessionHandler = markSessionHandler;
         }
 
-        public async Task CreateMarkSessionAndDeleteDependantResurces(
+        public async Task<string> CreateMarkSessionAndDeleteDependantResurces(
             string resourceType,
             string resourceId,
             string projectId
@@ -33,16 +33,16 @@ namespace mars_deletion_svc.Controllers
                 MarkingServiceClient.MarkSessionTypeToBeDeleted
             );
 
-            await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
+            return await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
         }
 
-        public async Task DeleteMarkSessionAndDependantResources(
+        public async Task<string> DeleteMarkSessionAndDependantResources(
             string markSessionId
         )
         {
             var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
 
-            await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
+            return await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
         }
     }
 }

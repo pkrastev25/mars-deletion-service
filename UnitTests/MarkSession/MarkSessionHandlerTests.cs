@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hangfire;
+using mars_deletion_svc.BackgroundJobs.Interfaces;
 using mars_deletion_svc.DependantResource.Interfaces;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Interfaces;
@@ -56,7 +56,7 @@ namespace UnitTests.MarkSession
         public async void StartDeletionProcess_SuccessfulDeletion_NoExceptionThrown()
         {
             // Arrange
-            var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var backgroundJobClient = new Mock<IBackgroundJobsHandler>();
             var markingServiceClient = new Mock<IMarkingServiceClient>();
             markingServiceClient
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
@@ -95,7 +95,7 @@ namespace UnitTests.MarkSession
         public async void StartDeletionProcess_MarkSessionDoesNotExistException_NoExceptionThrown()
         {
             // Arrange
-            var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var backgroundJobClient = new Mock<IBackgroundJobsHandler>();
             var markingServiceClient = new Mock<IMarkingServiceClient>();
             markingServiceClient
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))

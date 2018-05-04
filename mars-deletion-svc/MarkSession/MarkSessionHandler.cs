@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hangfire;
+using mars_deletion_svc.BackgroundJobs.Interfaces;
 using mars_deletion_svc.DependantResource.Interfaces;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Interfaces;
@@ -12,32 +12,30 @@ namespace mars_deletion_svc.MarkSession
 {
     public class MarkSessionHandler : IMarkSessionHandler
     {
-        private readonly IBackgroundJobClient _backgroundJobClient;
+        private readonly IBackgroundJobsHandler _backgroundJobsHandler;
         private readonly IMarkingServiceClient _markingServiceClient;
         private readonly IDependantResourceHandler _dependantResourceHandler;
         private readonly ILoggerService _loggerService;
 
         public MarkSessionHandler(
-            IBackgroundJobClient backgroundJobClient,
+            IBackgroundJobsHandler backgroundJobsHandler,
             IMarkingServiceClient markingServiceClient,
             IDependantResourceHandler dependantResourceHandler,
             ILoggerService loggerService
         )
         {
-            _backgroundJobClient = backgroundJobClient;
+            _backgroundJobsHandler = backgroundJobsHandler;
             _markingServiceClient = markingServiceClient;
             _dependantResourceHandler = dependantResourceHandler;
             _loggerService = loggerService;
         }
 
-        public async Task DeleteMarkSessionAndDependantResources(
+        public async Task<string> DeleteMarkSessionAndDependantResources(
             MarkSessionModel markSessionModel
         )
         {
-            await Task.Run(
-                () => _backgroundJobClient.Enqueue(
-                    () => StartDeletionProcess(markSessionModel.MarkSessionId)
-                )
+            return await _backgroundJobsHandler.CreateBackgroundJob(
+                () => StartDeletionProcess(markSessionModel.MarkSessionId)
             );
         }
 

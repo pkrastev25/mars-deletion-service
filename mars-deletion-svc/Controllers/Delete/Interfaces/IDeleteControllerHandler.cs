@@ -4,13 +4,13 @@ namespace mars_deletion_svc.Controllers.Interfaces
 {
     public interface IDeleteControllerHandler
     {
-        Task CreateMarkSessionAndDeleteDependantResurces(
+        Task<string> CreateMarkSessionAndDeleteDependantResurces(
             string resourceType,
             string resourceId,
             string projectId
         );
 
-        Task DeleteMarkSessionAndDependantResources(
+        Task<string> DeleteMarkSessionAndDependantResources(
             string markSessionId
         );
     }

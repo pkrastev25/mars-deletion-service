@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using mars_deletion_svc.Controllers;
 using mars_deletion_svc.MarkingService.Interfaces;
 using mars_deletion_svc.MarkSession.Interfaces;
@@ -26,7 +25,7 @@ namespace UnitTests.Controllers.Delete
             var markSessionHandler = new Mock<IMarkSessionHandler>();
             markSessionHandler
                 .Setup(m => m.DeleteMarkSessionAndDependantResources(It.IsAny<MarkSessionModel>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(It.IsAny<string>());
             var deleteControllerHandler = new DeleteControllerHandler(
                 markingServiceClient.Object,
                 markSessionHandler.Object
