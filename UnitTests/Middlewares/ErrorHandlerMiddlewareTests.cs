@@ -3,8 +3,9 @@ using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.Middlewares;
-using mars_deletion_svc.Services;
+using mars_deletion_svc.Services.Inerfaces;
 using Microsoft.AspNetCore.Http;
+using Moq;
 using Xunit;
 
 namespace UnitTests.Middlewares
@@ -16,10 +17,10 @@ namespace UnitTests.Middlewares
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            var loggerService = new LoggerService();
+            var loggerService = new Mock<ILoggerService>();
             var errorHandlerMiddleware = new ErrorHandlerMiddleware(
                 async innerHttpContext => await Task.FromException(new ResourceConflictException("")),
-                loggerService
+                loggerService.Object
             );
 
             // Act
@@ -34,10 +35,10 @@ namespace UnitTests.Middlewares
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            var loggerService = new LoggerService();
+            var loggerService = new Mock<ILoggerService>();
             var errorHandlerMiddleware = new ErrorHandlerMiddleware(
                 async innerHttpContext => await Task.FromException(new Exception("")),
-                loggerService
+                loggerService.Object
             );
 
             // Act

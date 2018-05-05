@@ -25,7 +25,7 @@ namespace mars_deletion_svc.BackgroundJobs
         )
         {
             return await Task.Run(
-                () =>  _backgroundJobClient.Enqueue(
+                () => _backgroundJobClient.Enqueue(
                     backgroundJob
                 )
             );
@@ -59,9 +59,7 @@ namespace mars_deletion_svc.BackgroundJobs
                     );
                 }
 
-                var stateName = jobData.State;
-
-                return stateName == BackgroundJobStateEnum.HangfireStateSucceededForBackgroundJob
+                return jobData.State == BackgroundJobStateEnum.HangfireStateSucceededForBackgroundJob
                     ? BackgroundJobStateEnum.StateDoneForBackgroundJob
                     : BackgroundJobStateEnum.StateProcessingForBackgroundJob;
             });

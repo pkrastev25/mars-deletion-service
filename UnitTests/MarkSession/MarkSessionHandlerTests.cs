@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using mars_deletion_svc.BackgroundJobs.Interfaces;
 using mars_deletion_svc.DependantResource.Interfaces;
@@ -14,13 +15,14 @@ namespace UnitTests.MarkSession
 {
     public class MarkSessionHandlerTests
     {
-        /*
-         // TODO: Figure this out !
         [Fact]
-        public async void DeleteMarkSessionAndDependantResources_OkStatusCode_DoesNotThrowException()
+        public async void DeleteMarkSessionAndDependantResources_StartBackgroundJob_ReturnsBackgroundJobId()
         {
             // Arrange
-            var backgroundJobClient = new Mock<IBackgroundJobClient>();
+            var backgroundJobClient = new Mock<IBackgroundJobsHandler>();
+            backgroundJobClient
+                .Setup(m => m.CreateBackgroundJob(It.IsAny<Expression<Func<Task>>>()))
+                .ReturnsAsync("12345");
             var markingServiceClient = new Mock<IMarkingServiceClient>();
             markingServiceClient
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
@@ -32,25 +34,22 @@ namespace UnitTests.MarkSession
             dependantResourceHandler
                 .Setup(m => m.DeleteDependantResourcesForMarkSession(It.IsAny<MarkSessionModel>()))
                 .Returns(Task.CompletedTask);
-            var loggerService = new LoggerService();
+            var loggerService = new Mock<ILoggerService>();
             var markSessionHandler = new MarkSessionHandler(
                 backgroundJobClient.Object,
                 markingServiceClient.Object,
                 dependantResourceHandler.Object,
-                loggerService
+                loggerService.Object
             );
 
             // Act
-            await markSessionHandler.DeleteMarkSessionAndDependantResources(It.IsAny<MarkSessionModel>());
+            var backgroundJobId = await markSessionHandler.DeleteMarkSessionAndDependantResources(
+                It.IsAny<MarkSessionModel>()
+            );
 
             // Asset
-            backgroundJobClient.Verify(x => x.Create(
-                    It.Is<Job>(job => job.Method.Name == "StartDeletionProcess"),
-                    It.IsAny<EnqueuedState>()
-                )
-            );
+            Assert.NotEmpty(backgroundJobId);
         }
-        */
 
         [Fact]
         public async void StartDeletionProcess_SuccessfulDeletion_NoExceptionThrown()

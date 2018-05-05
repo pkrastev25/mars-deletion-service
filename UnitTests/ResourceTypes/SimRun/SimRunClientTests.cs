@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.ResourceTypes.SimRun;
-using mars_deletion_svc.Services;
 using mars_deletion_svc.Services.Inerfaces;
 using Moq;
 using UnitTests._DataMocks;
@@ -66,10 +65,10 @@ namespace UnitTests.ResourceTypes.SimRun
             httpService
                 .Setup(m => m.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new LoggerService();
+            var logerService = new Mock<ILoggerService>();
             var simRunClient = new SimRunClient(
                 httpService.Object,
-                logerService
+                logerService.Object
             );
             Exception exception = null;
 
