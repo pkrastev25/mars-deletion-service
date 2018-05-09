@@ -28,7 +28,7 @@ namespace UnitTests.MarkSession
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
                 .ReturnsAsync(It.IsAny<MarkSessionModel>());
             markingServiceClient
-                .Setup(m => m.DeleteMarkingSession(It.IsAny<string>()))
+                .Setup(m => m.DeleteEmptyMarkingSession(It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
             var dependantResourceHandler = new Mock<IDependantResourceHandler>();
             dependantResourceHandler
@@ -61,7 +61,7 @@ namespace UnitTests.MarkSession
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
                 .ReturnsAsync(It.IsAny<MarkSessionModel>());
             markingServiceClient
-                .Setup(m => m.DeleteMarkingSession(It.IsAny<string>()))
+                .Setup(m => m.DeleteEmptyMarkingSession(It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
             var dependantResourceHandler = new Mock<IDependantResourceHandler>();
             dependantResourceHandler
@@ -100,7 +100,7 @@ namespace UnitTests.MarkSession
                 .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
                 .ThrowsAsync(new MarkSessionDoesNotExistException(It.IsAny<string>()));
             markingServiceClient
-                .Setup(m => m.DeleteMarkingSession(It.IsAny<string>()))
+                .Setup(m => m.DeleteEmptyMarkingSession(It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
             var dependantResourceHandler = new Mock<IDependantResourceHandler>();
             dependantResourceHandler

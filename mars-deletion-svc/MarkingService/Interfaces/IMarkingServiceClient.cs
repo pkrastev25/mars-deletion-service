@@ -21,7 +21,7 @@ namespace mars_deletion_svc.MarkingService.Interfaces
             string markSessionType
         );
 
-        Task DeleteMarkingSession(
+        Task DeleteEmptyMarkingSession(
             string markSessionId
         );
     }

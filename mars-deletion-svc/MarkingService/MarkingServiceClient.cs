@@ -98,12 +98,12 @@ namespace mars_deletion_svc.MarkingService
             return await response.Deserialize<List<MarkSessionModel>>();
         }
 
-        public async Task DeleteMarkingSession(
+        public async Task DeleteEmptyMarkingSession(
             string markSessionId
         )
         {
             var response = await _httpService.DeleteAsync(
-                $"http://marking-svc/api/markSession/{markSessionId}"
+                $"http://marking-svc/api/markSession/{markSessionId}/emptySession"
             );
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(

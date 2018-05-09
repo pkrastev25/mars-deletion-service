@@ -226,7 +226,7 @@ namespace UnitTests.MarkingService
             try
             {
                 // Act
-                await markingServiceClient.DeleteMarkingSession(It.IsAny<string>());
+                await markingServiceClient.DeleteEmptyMarkingSession(It.IsAny<string>());
             }
             catch (Exception e)
             {
@@ -256,7 +256,7 @@ namespace UnitTests.MarkingService
             try
             {
                 // Act
-                await markingServiceClient.DeleteMarkingSession(It.IsAny<string>());
+                await markingServiceClient.DeleteEmptyMarkingSession(It.IsAny<string>());
             }
             catch (FailedToDeleteMarkSessionException e)
             {

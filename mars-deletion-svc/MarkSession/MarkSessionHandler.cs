@@ -54,7 +54,7 @@ namespace mars_deletion_svc.MarkSession
 
                     var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
                     await _dependantResourceHandler.DeleteDependantResourcesForMarkSession(markSessionModel);
-                    await _markingServiceClient.DeleteMarkingSession(markSessionId);
+                    await _markingServiceClient.DeleteEmptyMarkingSession(markSessionId);
 
                     isMarkSessionDeleted = true;
                 }
