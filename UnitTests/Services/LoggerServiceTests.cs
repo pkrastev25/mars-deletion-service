@@ -8,7 +8,7 @@ namespace UnitTests.Services
     public class LoggerServiceTests
     {
         [Fact]
-        public void LogDeleteEvent_StringMessage_NoExceptionThrown()
+        public void LogDeleteEvent_StringMessage_StringMessageIsWrittenToTheConsole()
         {
             // Arrange
             var messageToWriteToConsole = "Some message to the console!";
@@ -25,7 +25,7 @@ namespace UnitTests.Services
         }
 
         [Fact]
-        public void LogErrorEvent_StringMessage_WritesToConsole()
+        public void LogErrorEvent_StringMessage_StringMessageIsWrittenToTheConsole()
         {
             // Arrange
             var messageToWriteToConsole = "Some error has occurred!";

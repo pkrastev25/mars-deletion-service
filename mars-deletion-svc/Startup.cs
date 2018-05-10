@@ -58,25 +58,25 @@ namespace mars_deletion_svc
             });
 
             // Services
-            services.AddTransient<IHttpService, HttpService>();
-            services.AddTransient<ILoggerService, LoggerService>();
+            services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<ILoggerService, LoggerService>();
             services.AddSingleton<IHostedService, HostedStartupService>();
 
             // Clients
-            services.AddSingleton<HttpClient>();
-            services.AddTransient<IMarkingServiceClient, MarkingServiceClient>();
-            services.AddTransient<IMetadataClient, MetadataClient>();
-            services.AddTransient<IScenarioClient, ScenarioClient>();
-            services.AddTransient<IResultConfigClient, ResultConfigClient>();
-            services.AddTransient<ISimPlanClient, SimPlanClient>();
-            services.AddTransient<ISimRunClient, SimRunClient>();
-            services.AddTransient<IResultDataClient, ResultDataClient>();
+            services.AddScoped<HttpClient>();
+            services.AddScoped<IMarkingServiceClient, MarkingServiceClient>();
+            services.AddScoped<IMetadataClient, MetadataClient>();
+            services.AddScoped<IScenarioClient, ScenarioClient>();
+            services.AddScoped<IResultConfigClient, ResultConfigClient>();
+            services.AddScoped<ISimPlanClient, SimPlanClient>();
+            services.AddScoped<ISimRunClient, SimRunClient>();
+            services.AddScoped<IResultDataClient, ResultDataClient>();
 
             // Handlers
-            services.AddTransient<IDeleteControllerHandler, DeleteControllerHandler>();
-            services.AddTransient<IMarkSessionHandler, MarkSessionHandler>();
-            services.AddTransient<IDependantResourceHandler, DependantResourceHandler>();
-            services.AddTransient<IBackgroundJobsHandler, BackgroundJobsHandler>();
+            services.AddScoped<IDeleteControllerHandler, DeleteControllerHandler>();
+            services.AddScoped<IMarkSessionHandler, MarkSessionHandler>();
+            services.AddScoped<IDependantResourceHandler, DependantResourceHandler>();
+            services.AddScoped<IBackgroundJobsHandler, BackgroundJobsHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

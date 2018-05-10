@@ -23,7 +23,7 @@ namespace mars_deletion_svc.Utils
 
             if (allTasks.Exception != null)
             {
-                throw allTasks.Exception;
+                throw allTasks.Exception.InnerException;
             }
 
             return allTasks;
