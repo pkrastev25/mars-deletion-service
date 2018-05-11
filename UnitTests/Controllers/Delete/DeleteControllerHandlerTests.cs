@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using mars_deletion_svc.Controllers;
 using mars_deletion_svc.MarkingService.Interfaces;
 using mars_deletion_svc.MarkSession.Interfaces;
@@ -48,6 +49,34 @@ namespace UnitTests.Controllers.Delete
 
             // Assert
             Assert.Null(exception);
+        }
+
+        [Fact]
+        public async void DeleteMarkSessionAndDependantResources_SuccessfulDelete_ReturnsBackgroundJobId()
+        {
+            // Arrange
+            var backgroundJobId = "1234";
+            var markingServiceClient = new Mock<IMarkingServiceClient>();
+            markingServiceClient
+                .Setup(m => m.GetMarkSessionById(It.IsAny<string>()))
+                .ReturnsAsync(It.IsAny<MarkSessionModel>());
+            markingServiceClient
+                .Setup(m => m.UpdateMarkSessionType(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.CompletedTask);
+            var markSessionHandler = new Mock<IMarkSessionHandler>();
+            markSessionHandler
+                .Setup(m => m.DeleteMarkSessionAndDependantResources(It.IsAny<MarkSessionModel>()))
+                .ReturnsAsync(backgroundJobId);
+            var deleteControllerHandler = new DeleteControllerHandler(
+                markingServiceClient.Object,
+                markSessionHandler.Object
+            );
+
+            // Act
+            var result = await deleteControllerHandler.DeleteMarkSessionAndDependantResources(It.IsAny<string>());
+
+            // Assert
+            Assert.Equal(result, backgroundJobId);
         }
     }
 }

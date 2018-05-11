@@ -41,6 +41,10 @@ namespace mars_deletion_svc.Controllers
         )
         {
             var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
+            await _markingServiceClient.UpdateMarkSessionType(
+                markSessionId,
+                MarkingServiceClient.MarkSessionTypeToBeDeleted
+            );
 
             return await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
         }

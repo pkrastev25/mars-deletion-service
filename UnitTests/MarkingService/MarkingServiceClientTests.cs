@@ -208,6 +208,61 @@ namespace UnitTests.MarkingService
         }
 
         [Fact]
+        public async void UpdateMarkSessionType_OkStatusCode_NoExceptionThrown()
+        {
+            // Arrange
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK) {Content = new StringContent("")};
+            var httpService = new Mock<IHttpService>();
+            httpService
+                .Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(httpResponseMessage);
+            var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.UpdateMarkSessionType(It.IsAny<string>(), It.IsAny<string>());
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public async void UpdateMarkSessionType_InternalServerErrorStatusCode_ThrowsException()
+        {
+            // Arrange
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError)
+            {
+                Content = new StringContent("")
+            };
+            var httpService = new Mock<IHttpService>();
+            httpService
+                .Setup(m => m.PutAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(httpResponseMessage);
+            var markingServiceClient = new MarkingServiceClient(httpService.Object);
+            Exception exception = null;
+
+            try
+            {
+                // Act
+                await markingServiceClient.UpdateMarkSessionType(It.IsAny<string>(), It.IsAny<string>());
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            // Assert
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
         public async void DeleteMarkingSession_NotFoundStatusCode_NoExceptionThrown()
         {
             // Arrange

@@ -14,6 +14,11 @@ namespace mars_deletion_svc.Services.Inerfaces
             string requestUri
         );
 
+        Task<HttpResponseMessage> PutAsync<T>(
+            string requestUri,
+            T updatedModel
+        );
+
         Task<HttpResponseMessage> DeleteAsync(
             string requestUri
         );

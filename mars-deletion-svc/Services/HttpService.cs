@@ -37,6 +37,13 @@ namespace mars_deletion_svc.Services
             );
         }
 
+        public async Task<HttpResponseMessage> PutAsync<T>(string requestUri, T updatedModel)
+        {
+            return await ExecuteRequestAndFormatExceptionIfThrown(
+                _httpClient.PutAsync(requestUri, CreateStringContent(updatedModel))
+            );
+        }
+
         public async Task<HttpResponseMessage> DeleteAsync(
             string requestUri
         )

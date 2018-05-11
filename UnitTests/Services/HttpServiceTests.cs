@@ -42,6 +42,23 @@ namespace UnitTests.Services
             // Assert
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
         }
+        
+        [Fact]
+        public async void PutAsync_OkStatusCode_ReturnsOkStatusCode()
+        {
+            // Arrange
+            var httpClient = new Mock<HttpClient>();
+            httpClient
+                .Setup(m => m.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+            var httpService = new HttpService(httpClient.Object);
+
+            // Act
+            var result = await httpService.PutAsync(It.IsAny<string>(), It.IsAny<string>());
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
 
         [Fact]
         public async void DeleteAsync_NotFoundStatusCode_ReturnsNotFoundStatusCode()

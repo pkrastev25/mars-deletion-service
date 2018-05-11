@@ -98,6 +98,24 @@ namespace mars_deletion_svc.MarkingService
             return await response.Deserialize<List<MarkSessionModel>>();
         }
 
+        public async Task UpdateMarkSessionType(
+            string markSessionId,
+            string markSessionType
+        )
+        {
+            var response = await _httpService.PutAsync(
+                $"http://marking-svc/api/markSession/{markSessionId}?markSessionType={markSessionType}",
+                ""
+            );
+
+            response.ThrowExceptionIfNotSuccessfulResponse(
+                new FailedToUpdateMarkSessionException(
+                    $"Failed to update mark session with id: {markSessionId} for type: {markSessionType} from marking-svc!" +
+                    await response.IncludeStatusCodeAndMessageFromResponse()
+                )
+            );
+        }
+
         public async Task DeleteEmptyMarkingSession(
             string markSessionId
         )
