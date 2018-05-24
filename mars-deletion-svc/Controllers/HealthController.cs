@@ -3,7 +3,7 @@
 namespace mars_deletion_svc.Controllers
 {
     [Route("healthz")]
-    public class HealtController : Controller
+    public class HealthController : Controller
     {
         [HttpGet]
         public IActionResult HealthCheck()

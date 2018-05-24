@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.ResourceTypes.Scenario.Interfaces;
@@ -9,16 +10,16 @@ namespace mars_deletion_svc.ResourceTypes.Scenario
 {
     public class ScenarioClient : IScenarioClient
     {
+        private readonly string _baseUrl;
         private readonly IHttpService _httpService;
-        private readonly ILoggerService _loggerService;
 
         public ScenarioClient(
-            IHttpService httpService,
-            ILoggerService loggerService
+            IHttpService httpService
         )
         {
+            var baseUrl = Environment.GetEnvironmentVariable(Constants.Constants.ScenarioSvcUrlKey);
+            _baseUrl = string.IsNullOrEmpty(baseUrl) ? "scenario-svc" : baseUrl;
             _httpService = httpService;
-            _loggerService = loggerService;
         }
 
         public async Task DeleteResource(
@@ -26,7 +27,7 @@ namespace mars_deletion_svc.ResourceTypes.Scenario
         )
         {
             var response = await _httpService.DeleteAsync(
-                $"http://scenario-svc/scenarios/{dependantResourceModel.ResourceId}"
+                $"http://{_baseUrl}/scenarios/{dependantResourceModel.ResourceId}"
             );
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
@@ -35,8 +36,6 @@ namespace mars_deletion_svc.ResourceTypes.Scenario
                     await response.IncludeStatusCodeAndMessageFromResponse()
                 )
             );
-
-            _loggerService.LogDeleteEvent(dependantResourceModel.ToString());
         }
     }
 }

@@ -1,0 +1,20 @@
+[
+{
+    "_id" : ObjectId("5b06acef52e35100015f04da"),
+    "ownerid" : "5d5d0365-4a70-4912-b727-f69309142c7e",
+    "groupid" : "ungrouped",
+    "projectid" : "623be379-ed40-49f3-bdd8-416f8cd0faa6",
+    "podname" : "",
+    "jobname" : "trial-run-1-5b06abe652e35100015f04d9",
+    "simplanid" : "5b06abe652e35100015f04d9",
+    "simulationid" : "4ab312c4-801d-4fa1-b8d9-4e9b24c5dd4a",
+    "consoleoutput" : "",
+    "status" : "Aborted",
+    "currenttick" : 0,
+    "totalticks" : 0,
+    "startdatetime" : ISODate("2018-05-24T12:15:43.768Z"),
+    "lastupdated" : ISODate("2018-05-24T12:15:43.768Z"),
+    "estimatedfinish" : Date(-62135596800000),
+    "tobedeleted" : false
+}
+]

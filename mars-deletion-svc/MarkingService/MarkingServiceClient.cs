@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
@@ -13,12 +14,15 @@ namespace mars_deletion_svc.MarkingService
     {
         public const string MarkSessionTypeToBeDeleted = "TO_BE_DELETED";
 
+        private readonly string _baseUrl;
         private readonly IHttpService _httpService;
 
         public MarkingServiceClient(
             IHttpService httpService
         )
         {
+            var baseUrl = Environment.GetEnvironmentVariable(Constants.Constants.MarkingSvcUrlKey);
+            _baseUrl = string.IsNullOrEmpty(baseUrl) ? "marking-svc" : baseUrl;
             _httpService = httpService;
         }
 
@@ -30,7 +34,7 @@ namespace mars_deletion_svc.MarkingService
         )
         {
             var response = await _httpService.PostAsync(
-                $"http://marking-svc/api/markSession/{resourceType}/{resourceId}?markSessionType={markSessionType}&projectId={projectId}",
+                $"http://{_baseUrl}/api/markSession/{resourceType}/{resourceId}?markSessionType={markSessionType}&projectId={projectId}",
                 ""
             );
 
@@ -56,7 +60,7 @@ namespace mars_deletion_svc.MarkingService
         )
         {
             var response = await _httpService.GetAsync(
-                $"http://marking-svc/api/markSession/{markSessionId}"
+                $"http://{_baseUrl}/api/markSession/{markSessionId}"
             );
 
             switch (response.StatusCode)
@@ -80,7 +84,7 @@ namespace mars_deletion_svc.MarkingService
         )
         {
             var response = await _httpService.GetAsync(
-                $"http://marking-svc/api/markSession?markSessionType={markSessionType}"
+                $"http://{_baseUrl}/api/markSession?markSessionType={markSessionType}"
             );
 
             response.ThrowExceptionIfNotSuccessfulResponse(
@@ -104,7 +108,7 @@ namespace mars_deletion_svc.MarkingService
         )
         {
             var response = await _httpService.PutAsync(
-                $"http://marking-svc/api/markSession/{markSessionId}?markSessionType={markSessionType}",
+                $"http://{_baseUrl}/api/markSession/{markSessionId}?markSessionType={markSessionType}",
                 ""
             );
 

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Models;
@@ -10,16 +11,16 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
 {
     public class SimRunClient : ISimRunClient
     {
+        private readonly string _baseUrl;
         private readonly IHttpService _httpService;
-        private readonly ILoggerService _loggerService;
 
         public SimRunClient(
-            IHttpService httpService,
-            ILoggerService loggerService
+            IHttpService httpService
         )
         {
+            var baseUrl = Environment.GetEnvironmentVariable(Constants.Constants.FileSvcUrlKey);
+            _baseUrl = string.IsNullOrEmpty(baseUrl) ? "sim-runner-svc" : baseUrl;
             _httpService = httpService;
-            _loggerService = loggerService;
         }
 
         public async Task DeleteResource(
@@ -30,7 +31,7 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
             if (await DoesSimRunExist(dependantResourceModel.ResourceId, projectId))
             {
                 var response = await _httpService.DeleteAsync(
-                    $"http://sim-runner-svc/simrun?simRunId={dependantResourceModel.ResourceId}"
+                    $"http://{_baseUrl}/simrun?simRunId={dependantResourceModel.ResourceId}"
                 );
 
                 response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
@@ -40,8 +41,6 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
                     )
                 );
             }
-
-            _loggerService.LogDeleteEvent(dependantResourceModel.ToString());
         }
 
         private async Task<bool> DoesSimRunExist(
@@ -50,7 +49,7 @@ namespace mars_deletion_svc.ResourceTypes.SimRun
         )
         {
             var response = await _httpService.GetAsync(
-                $"http://sim-runner-svc/simrun?simRunId={simRunId}&projectid={projectId}"
+                $"http://{_baseUrl}/simrun?simRunId={simRunId}&projectid={projectId}"
             );
 
             if (response.IsSuccessStatusCode)

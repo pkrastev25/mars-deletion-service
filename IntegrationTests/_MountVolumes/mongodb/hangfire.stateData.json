@@ -1,0 +1,13 @@
+[
+	{
+    "_id" : ObjectId("5af329e9baf2ac0007a3d134"),
+    "_t" : [ 
+        "KeyValueDto", 
+        "ExpiringKeyValueDto", 
+        "ListDto"
+    ],
+    "Key" : "succeeded",
+    "Value" : "5af329dbbaf2ac0007a3d12f",
+    "ExpireAt" : null
+}
+]

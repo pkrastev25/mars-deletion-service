@@ -20,8 +20,8 @@ namespace UnitTests.DependantResource
         public async void DeleteDependantResourcesForMarkSession_MarkSessionModel_NoExceptionThrown()
         {
             // Arrange
-            var metadataClient = new Mock<IMetadataClient>();
-            metadataClient
+            var fileClient = new Mock<IFileClient>();
+            fileClient
                 .Setup(m => m.DeleteResource(It.IsAny<DependantResourceModel>()))
                 .Returns(Task.CompletedTask);
             var scenarioClient = new Mock<IScenarioClient>();
@@ -45,7 +45,7 @@ namespace UnitTests.DependantResource
                 .Setup(m => m.DeleteResource(It.IsAny<DependantResourceModel>()))
                 .Returns(Task.CompletedTask);
             var dependantResourceHandler = new DependantResourceHandler(
-                metadataClient.Object,
+                fileClient.Object,
                 scenarioClient.Object,
                 resultConfigClient.Object,
                 simPlanClient.Object,

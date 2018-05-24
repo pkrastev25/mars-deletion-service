@@ -60,12 +60,12 @@ namespace mars_deletion_svc
             // Services
             services.AddScoped<IHttpService, HttpService>();
             services.AddScoped<ILoggerService, LoggerService>();
-            services.AddSingleton<IHostedService, HostedStartupService>();
+            services.AddScoped<IHostedService, HostedStartupService>();
 
             // Clients
             services.AddScoped<HttpClient>();
             services.AddScoped<IMarkingServiceClient, MarkingServiceClient>();
-            services.AddScoped<IMetadataClient, MetadataClient>();
+            services.AddScoped<IFileClient, FileClient>();
             services.AddScoped<IScenarioClient, ScenarioClient>();
             services.AddScoped<IResultConfigClient, ResultConfigClient>();
             services.AddScoped<ISimPlanClient, SimPlanClient>();

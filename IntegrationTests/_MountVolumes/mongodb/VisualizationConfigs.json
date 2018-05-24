@@ -1,0 +1,70 @@
+[
+{
+    "_id" : ObjectId("5b06a796d1dd991e5b4ed878"),
+    "ConfigId" : "2462a6b6-5e07-48b4-b3e3-b3b207d55f4e",
+    "Enabled" : true,
+    "Camera" : {
+        "Position" : [ 
+            0.0, 
+            0.0, 
+            0.0
+        ],
+        "Orientation" : 0.0,
+        "Pitch" : 0.0,
+        "Speed" : 1.0
+    },
+    "Terrain" : {
+        "Type" : "FlatArea",
+        "PreloadingRadius" : 2,
+        "HeightmapFile" : "",
+        "HeightmapReference" : "LowerLeft",
+        "HeightmapExtents" : [ 
+            30.0, 
+            20.0
+        ],
+        "HeightmapOffset" : [ 
+            0.0, 
+            0.0, 
+            0.0
+        ],
+        "WorldExtents" : [ 
+            30.0, 
+            20.0
+        ],
+        "WorldScale" : 0.05,
+        "Texture" : "grass1.jpg",
+        "TextureType" : "None",
+        "Tiling" : 8
+    },
+    "Skybox" : {
+        "Texture" : "skybox01",
+        "Dimensions" : 4000
+    },
+    "AgentDisplayDefinitions" : [ 
+        {
+            "Layer" : "Grassland",
+            "AgentType" : "Grass",
+            "ModelScale" : 1.0,
+            "PresetModel" : false,
+            "VisualizationModel" : "",
+            "VisualizationParams" : ""
+        }, 
+        {
+            "Layer" : "Grassland",
+            "AgentType" : "Sheep",
+            "ModelScale" : 1.0,
+            "PresetModel" : false,
+            "VisualizationModel" : "",
+            "VisualizationParams" : ""
+        }, 
+        {
+            "Layer" : "WolfLayer",
+            "AgentType" : "Wolf",
+            "ModelScale" : 1.0,
+            "PresetModel" : false,
+            "VisualizationModel" : "",
+            "VisualizationParams" : ""
+        }
+    ]
+}
+]

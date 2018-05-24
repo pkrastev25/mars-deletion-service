@@ -25,10 +25,8 @@ namespace UnitTests.ResourceTypes.ResultConfig
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
             var resultConfigClient = new ResultConfigClient(
-                httpService.Object,
-                logerService.Object
+                httpService.Object
             );
             Exception exception = null;
 
@@ -59,10 +57,8 @@ namespace UnitTests.ResourceTypes.ResultConfig
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
             var resultConfigClient = new ResultConfigClient(
-                httpService.Object,
-                logerService.Object
+                httpService.Object
             );
             Exception exception = null;
 

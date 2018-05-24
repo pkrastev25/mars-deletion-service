@@ -16,7 +16,7 @@ namespace mars_deletion_svc.DependantResource
 {
     public class DependantResourceHandler : IDependantResourceHandler
     {
-        private readonly IMetadataClient _metadataClient;
+        private readonly IFileClient _fileClient;
         private readonly IScenarioClient _scenarioClient;
         private readonly IResultConfigClient _resultConfigClient;
         private readonly ISimPlanClient _simPlanClient;
@@ -24,7 +24,7 @@ namespace mars_deletion_svc.DependantResource
         private readonly IResultDataClient _resultDataClient;
 
         public DependantResourceHandler(
-            IMetadataClient metadataClient,
+            IFileClient fileClient,
             IScenarioClient scenarioClient,
             IResultConfigClient resultConfigClient,
             ISimPlanClient simPlanClient,
@@ -32,7 +32,7 @@ namespace mars_deletion_svc.DependantResource
             IResultDataClient resultDataClient
         )
         {
-            _metadataClient = metadataClient;
+            _fileClient = fileClient;
             _scenarioClient = scenarioClient;
             _resultConfigClient = resultConfigClient;
             _simPlanClient = simPlanClient;
@@ -55,7 +55,7 @@ namespace mars_deletion_svc.DependantResource
                         break;
                     case ResourceTypeEnum.Metadata:
                         taskList.Add(
-                            _metadataClient.DeleteResource(dependantResourceModel)
+                            _fileClient.DeleteResource(dependantResourceModel)
                         );
                         break;
                     case ResourceTypeEnum.Scenario:

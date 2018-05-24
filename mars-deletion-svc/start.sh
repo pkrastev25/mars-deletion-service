@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# Used to build you application, push a docker image to Nexus and restart the service in your cluster
+
 DOCKER_REGISTRY="nexus.informatik.haw-hamburg.de"
 SERVICE_NAME="deletion-svc"
 

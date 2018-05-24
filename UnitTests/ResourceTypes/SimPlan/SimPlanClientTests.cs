@@ -28,10 +28,8 @@ namespace UnitTests.ResourceTypes.SimPlan
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
             var simPlanClient = new SimPlanClient(
-                httpService.Object,
-                logerService.Object
+                httpService.Object
             );
             Exception exception = null;
 
@@ -65,10 +63,8 @@ namespace UnitTests.ResourceTypes.SimPlan
             httpService
                 .Setup(m => m.GetAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
             var simPlanClient = new SimPlanClient(
-                httpService.Object,
-                logerService.Object
+                httpService.Object
             );
             Exception exception = null;
 

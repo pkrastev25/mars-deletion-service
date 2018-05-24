@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Models;
@@ -10,16 +11,16 @@ namespace mars_deletion_svc.ResourceTypes.SimPlan
 {
     public class SimPlanClient : ISimPlanClient
     {
+        private readonly string _baseUrl;
         private readonly IHttpService _httpService;
-        private readonly ILoggerService _loggerService;
 
         public SimPlanClient(
-            IHttpService httpService,
-            ILoggerService loggerService
+            IHttpService httpService
         )
         {
+            var baseUrl = Environment.GetEnvironmentVariable(Constants.Constants.SimRunnerSvcUrlKey);
+            _baseUrl = string.IsNullOrEmpty(baseUrl) ? "sim-runner-svc" : baseUrl;
             _httpService = httpService;
-            _loggerService = loggerService;
         }
 
         public async Task DeleteResource(
@@ -30,7 +31,7 @@ namespace mars_deletion_svc.ResourceTypes.SimPlan
             if (await DoesSimPlanExist(dependantResourceModel.ResourceId, projectId))
             {
                 var response = await _httpService.DeleteAsync(
-                    $"http://sim-runner-svc/simplan?simPlanId={dependantResourceModel.ResourceId}"
+                    $"http://{_baseUrl}/simplan?simPlanId={dependantResourceModel.ResourceId}"
                 );
 
                 response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
@@ -40,8 +41,6 @@ namespace mars_deletion_svc.ResourceTypes.SimPlan
                     )
                 );
             }
-
-            _loggerService.LogDeleteEvent(dependantResourceModel.ToString());
         }
 
         private async Task<bool> DoesSimPlanExist(
@@ -50,7 +49,7 @@ namespace mars_deletion_svc.ResourceTypes.SimPlan
         )
         {
             var response = await _httpService.GetAsync(
-                $"http://sim-runner-svc/simplan?id={simPlanId}&projectid={projectId}"
+                $"http://{_baseUrl}/simplan?id={simPlanId}&projectid={projectId}"
             );
 
             if (response.IsSuccessStatusCode)

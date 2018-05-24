@@ -1,0 +1,157 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  labels:
+    role: database-utility-svc
+  name: dbus-config
+data:
+  mongodb-result.yml: |
+    target:
+      kind: "mongodb"
+      host: "result-mongodb"
+      port: 27017
+      #     https://jira.mongodb.org/browse/TOOLS-1468
+      #     params: "--gzip --forceTableScan --numParallelCollections 48"
+      params: "--forceTableScan --numParallelCollections 48"
+    scheduler:
+      cron: "0 3 */1 * *"
+      retention: 7
+      timeout: 720
+    deletion:
+      database: "ResultData"
+    archive:
+      database: "ResultData"
+      gzip: true
+      params: " --gzip --forceTableScan --numParallelCollections 48"
+    unarchive:
+      database: "ResultData"
+      gzip: true
+      params: " --gzip --numParallelCollections 48"
+    jobstatus:
+      database:   "ResultData"
+      collection: "JobStatus"
+#    sftp:
+#      host: marssyno.ful.informatik.haw-hamburg.de
+#      port: 22
+#      username: mars
+#      password: synokart101
+      # dir must exist on the SFTP server
+#      dir: results
+  mongodb-meta.yml: |
+    target:
+      kind: "mongodb"
+      host: "mongodb"
+      port: 27017
+      params: "--forceTableScan --numParallelCollections 48"
+    scheduler:
+      cron: "0 2 */1 * *"
+      retention: 7
+      timeout: 720
+  postgres-users.yml: |
+    target:
+      kind: "postgres"
+      host: "user-postgres"
+      port: 5432
+      username: "usersvc"
+      password: "mariokart101"
+    scheduler:
+      cron: "*/60 * * * *"
+      retention: 14
+      timeout: 720
+  postgres-projects.yml: |
+    target:
+      kind: "postgres"
+      host: "project-postgres"
+      port: 5432
+      username: "projectsvc"
+      password: "mariokart102"
+    scheduler:
+      cron: "*/60 * * * *"
+      retention: 14
+      timeout: 720
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-utility-svc
+  labels:
+    name: database-utility-svc
+spec:
+  ports:
+  - port: 8090
+    targetPort: 8090
+  clusterIP: None
+  selector:
+    role: database-utility-svc
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: database-utility-svc
+spec:
+  serviceName: database-utility-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      role: database-utility-svc
+  template:
+    metadata:
+      labels:
+        role: database-utility-svc
+    spec:
+      serviceAccount: mars-group-serviceaccount
+      containers:
+      - name: database-utility-svc
+        image: nexus.informatik.haw-hamburg.de/database-utility-service:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 8090
+          protocol: TCP
+        env:
+        - name: CIFS_MOUNT_HOST
+          value: "marssyno.ful.informatik.haw-hamburg.de"
+        - name: CIFS_MOUNT_FOLDER
+          value: "testing"
+        - name: CIFS_MOUNT_USER
+          value: "mars"
+        - name: CIFS_MOUNT_PASSWORD
+          value: "synokart101"
+        volumeMounts:
+        - name: dbus-data
+          mountPath: /data
+        - mountPath: /config/mongodb-result.yml
+          name: dbus-config
+          subPath: mongodb-result.yml
+        - mountPath: /config/mongodb-meta.yml
+          name: dbus-config
+          subPath: mongodb-meta.yml
+        - mountPath: /config/postgres-users.yml
+          name: dbus-config
+          subPath: postgres-users.yml
+        - mountPath: /config/postgres-projects.yml
+          name: dbus-config
+          subPath: postgres-projects.yml
+      volumes:
+        - name: dbus-config
+          configMap:
+            name: dbus-config
+            items:
+              - key: mongodb-result.yml
+                path: mongodb-result.yml
+              - key: mongodb-meta.yml
+                path: mongodb-meta.yml
+              - key: postgres-users.yml
+                path: postgres-users.yml
+              - key: postgres-projects.yml
+                path: postgres-projects.yml
+  volumeClaimTemplates:
+  - metadata:
+      name: dbus-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 4Gi

@@ -1,0 +1,41 @@
+[
+{
+    "_id" : ObjectId("5b06ad1157456e00015575ec"),
+    "SimId" : "4ab312c4-801d-4fa1-b8d9-4e9b24c5dd4a",
+    "ModelId" : "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0",
+    "ConfigId" : "2462a6b6-5e07-48b4-b3e3-b3b207d55f4e",
+    "OutputTarget" : "MongoDB",
+    "OutputParams" : {
+        "--full-output " : " true"
+    },
+    "Ticks" : 31,
+    "Finished" : true,
+    "SpatialType" : "Grid",
+    "Layers" : [ 
+        {
+            "Name" : "Grassland",
+            "Type" : "BasicLayer",
+            "Agents" : [ 
+                {
+                    "AgentType" : "Grass",
+                    "StaticProperties" : {}
+                }, 
+                {
+                    "AgentType" : "Sheep",
+                    "StaticProperties" : {}
+                }
+            ]
+        }, 
+        {
+            "Name" : "WolfLayer",
+            "Type" : "BasicLayer",
+            "Agents" : [ 
+                {
+                    "AgentType" : "Wolf",
+                    "StaticProperties" : {}
+                }
+            ]
+        }
+    ]
+}
+]

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.ResourceTypes.Metadata.Interfaces;
@@ -7,18 +8,18 @@ using mars_deletion_svc.Utils;
 
 namespace mars_deletion_svc.ResourceTypes.Metadata
 {
-    public class MetadataClient : IMetadataClient
+    public class FileClient : IFileClient
     {
+        private readonly string _baseUrl;
         private readonly IHttpService _httpService;
-        private readonly ILoggerService _loggerService;
 
-        public MetadataClient(
-            IHttpService httpService,
-            ILoggerService loggerService
+        public FileClient(
+            IHttpService httpService
         )
         {
+            var baseUrl = Environment.GetEnvironmentVariable(Constants.Constants.FileSvcUrlKey);
+            _baseUrl = string.IsNullOrEmpty(baseUrl) ? "file-svc" : baseUrl;
             _httpService = httpService;
-            _loggerService = loggerService;
         }
 
         public async Task DeleteResource(
@@ -26,7 +27,7 @@ namespace mars_deletion_svc.ResourceTypes.Metadata
         )
         {
             var response = await _httpService.DeleteAsync(
-                $"http://file-svc/files/{dependantResourceModel.ResourceId}"
+                $"http://{_baseUrl}/files/{dependantResourceModel.ResourceId}"
             );
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
@@ -35,8 +36,6 @@ namespace mars_deletion_svc.ResourceTypes.Metadata
                     await response.IncludeStatusCodeAndMessageFromResponse()
                 )
             );
-
-            _loggerService.LogDeleteEvent(dependantResourceModel.ToString());
         }
     }
 }

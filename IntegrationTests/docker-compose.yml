@@ -1,0 +1,207 @@
+version: '3'
+
+services:
+  mongo-seed:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    volumes:
+      - ./_MountVolumes/mongodb:/data
+    entrypoint:
+      - sh
+    command:
+      - ./data/seed_data.sh
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+      
+  result-mongo-seed:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    volumes:
+      - ./_MountVolumes/result-mongodb:/data
+    entrypoint:
+      - sh
+    command:
+      - ./data/seed_data.sh
+    links:
+      - result-mongodb
+    depends_on:
+      - result-mongodb
+      
+  project-postgress-seed:
+    image: nexus.informatik.haw-hamburg.de/postgres:9.6-alpine
+    volumes:
+      - ./_MountVolumes/project-postgres:/data
+    entrypoint:
+      - sh
+    command:
+      - ./data/seed_data.sh
+    links:
+      - project-postgres
+    depends_on:
+      - project-postgres
+
+  mongodb:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    expose:
+      - 27017
+
+  result-mongodb:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    expose:
+      - 27017
+        
+  project-postgres:
+    image: nexus.informatik.haw-hamburg.de/postgres:9.6-alpine
+    volumes:
+      - ./_MountVolumes/project-postgres:/data
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=projectsvc
+      - POSTGRES_PASSWORD=mariokart102
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+      
+  project-svc:
+    image: nexus.informatik.haw-hamburg.de/project-svc:latest
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=projectsvc
+      - POSTGRES_PASSWORD=mariokart102
+    links:
+      - project-postgres
+    depends_on:
+      - project-postgres
+    expose:
+      - 8080
+
+  file-svc:
+    image: nexus.informatik.haw-hamburg.de/file-svc:latest
+    links:
+      - mongodb
+      - metadata-svc
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+
+  # Reverse proxy which has the same host name as the metadata-svc
+  metadata-svc:
+    build: ./_ReverseProxies/metadata-svc
+    restart: always
+    expose:
+      - 80
+      - 8080
+
+  # The actual metadata-svc
+  metadata-service:
+    image: nexus.informatik.haw-hamburg.de/metadata-svc:latest
+    links:
+      - mongodb
+      - metadata-svc
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+
+  scenario-svc:
+    image: nexus.informatik.haw-hamburg.de/scenario-svc:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+      
+  resultcfg-svc:
+    image: nexus.informatik.haw-hamburg.de/resultcfg-svc:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+      
+  sim-runner-svc:
+    image: nexus.informatik.haw-hamburg.de/sim-runner-svc:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+      
+  database-utility-svc:
+    # TODO: Change image tag once merged
+    image: nexus.informatik.haw-hamburg.de/database-utility-service:dev
+    volumes:
+      - ./_MountVolumes/database-utility-svc:/config
+    links:
+      - result-mongodb
+    depends_on:
+      - result-mongodb
+    expose:
+      - 8090
+      
+  marking-svc:
+    image: nexus.informatik.haw-hamburg.de/marking-svc:latest
+    environment:
+      - PROJECT_SVC_URL=project-svc:8080
+      - METADATA_SVC_URL=metadata-svc:8080
+      - SCENARIO_SVC_URL=scenario-svc:8080
+      - RESULT_CONFIG_SVC_URL=resultcfg-svc:8080
+      - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
+      - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
+      - MONGO_DB_SVC_URL=mongodb://mongodb:27017
+    links:
+      - mongodb
+      - project-svc
+      - metadata-svc
+      - scenario-svc
+      - resultcfg-svc
+      - sim-runner-svc
+      - database-utility-svc
+    expose:
+      - 8080
+
+  deletion-svc-tests:
+    image: nexus.informatik.haw-hamburg.de/microsoft/dotnet:2.0.0-sdk
+    environment:
+      - FILE_SVC_URL=file-svc:8080
+      - SCENARIO_SVC_URL=scenario-svc:8080
+      - RESULT_CONFIG_SVC_URL=resultcfg-svc:8080
+      - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
+      - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
+      - MARKING_SVC_URL=marking-svc:8080
+      - MONGO_DB_SVC_URL=mongodb://mongodb:27017
+    volumes:
+      - ../:/mars-deletion-svc
+    entrypoint:
+      - sh
+    command:
+      - ./mars-deletion-svc/IntegrationTests/_MountVolumes/deletion-svc-tests/run_tests.sh
+    links:
+      - mongodb
+      - file-svc
+      - scenario-svc
+      - resultcfg-svc
+      - sim-runner-svc
+      - database-utility-svc
+      - marking-svc
+    depends_on:
+      - mongo-seed
+      - result-mongo-seed
+      - project-postgress-seed
+      - mongodb
+      - result-mongodb
+      - project-postgres
+      - project-svc
+      - file-svc
+      - metadata-service
+      - metadata-svc
+      - scenario-svc
+      - resultcfg-svc
+      - sim-runner-svc
+      - database-utility-svc
+      - marking-svc

@@ -1,0 +1,292 @@
+[
+{
+    "_id" : ObjectId("5b069e857c78bc00014af3cd"),
+    "dataId" : "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0",
+    "projectId" : "623be379-ed40-49f3-bdd8-416f8cd0faa6",
+    "userId" : "5d5d0365-4a70-4912-b727-f69309142c7e",
+    "privacy" : "PROJECT_PRIVATE",
+    "state" : "FINISHED",
+    "type" : "MODEL",
+    "title" : "WolvesAndSheep.zip",
+    "created" : "2018-05-24T11:14:13",
+    "description" : "",
+    "additionalTypeSpecificData" : {
+        "parserResult" : {
+            "AgentDescriptions" : [ 
+                {
+                    "Name" : "Grass",
+                    "FullName" : "WolvesModel.Agents.Grass, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "AgentLayerName" : "Grassland",
+                    "IsSpatial" : true,
+                    "SpatialType" : "Grid",
+                    "ConstructorParameters" : [ 
+                        {
+                            "Name" : "layer",
+                            "Type" : "WolvesModel.Layers.IGrassland, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "regFkt",
+                            "Type" : "LIFE.API.Layer.RegisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "unregFkt",
+                            "Type" : "LIFE.API.Layer.UnregisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "grid",
+                            "Type" : "LIFE.Components.Environments.GridEnvironment.IGridEnvironment`1[[LIFE.Components.Agents.BasicAgents.Agents.GridAgent`1[[WolvesModel.Agents.Grass, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], BasicAgents, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null]], GridEnvironment, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ],
+                    "InitializationProperties" : [],
+                    "OutputProperties" : [ 
+                        {
+                            "Name" : "FoodValue",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "FoodValueMax",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "AgentReference",
+                            "Type" : "WolvesModel.Agents.Grass, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ServiceID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ]
+                }, 
+                {
+                    "Name" : "Sheep",
+                    "FullName" : "WolvesModel.Agents.Sheep, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "AgentLayerName" : "Grassland",
+                    "IsSpatial" : true,
+                    "SpatialType" : "Grid",
+                    "ConstructorParameters" : [ 
+                        {
+                            "Name" : "layer",
+                            "Type" : "WolvesModel.Layers.IGrassland, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "regFkt",
+                            "Type" : "LIFE.API.Layer.RegisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "unregFkt",
+                            "Type" : "LIFE.API.Layer.UnregisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "grid",
+                            "Type" : "LIFE.Components.Environments.GridEnvironment.IGridEnvironment`1[[LIFE.Components.Agents.BasicAgents.Agents.GridAgent`1[[WolvesModel.Agents.Sheep, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], BasicAgents, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null]], GridEnvironment, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "sex",
+                            "Type" : "WolvesModel.Agents.Sex, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "EnumerationParameter",
+                            "EnumerationChoices" : [ 
+                                "Male", 
+                                "Female"
+                            ]
+                        }
+                    ],
+                    "InitializationProperties" : [],
+                    "OutputProperties" : [ 
+                        {
+                            "Name" : "Sex",
+                            "Type" : "WolvesModel.Agents.Sex, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "EnumerationParameter",
+                            "EnumerationChoices" : [ 
+                                "Male", 
+                                "Female"
+                            ]
+                        }, 
+                        {
+                            "Name" : "Energy",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "EnergyMax",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Hunger",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Rule",
+                            "Type" : "System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Targets",
+                            "Type" : "System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "TargetDistance",
+                            "Type" : "System.Double, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "AgentReference",
+                            "Type" : "WolvesModel.Agents.Sheep, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ServiceID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ]
+                }, 
+                {
+                    "Name" : "Wolf",
+                    "FullName" : "WolvesModel.Agents.Wolf, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "AgentLayerName" : "WolfLayer",
+                    "IsSpatial" : true,
+                    "SpatialType" : "Grid",
+                    "ConstructorParameters" : [ 
+                        {
+                            "Name" : "wolfLayer",
+                            "Type" : "WolvesModel.Layers.IWolfLayer, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "grassland",
+                            "Type" : "WolvesModel.Layers.IGrassland, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "regFkt",
+                            "Type" : "LIFE.API.Layer.RegisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "unregFkt",
+                            "Type" : "LIFE.API.Layer.UnregisterAgent, LIFE-API, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ],
+                    "InitializationProperties" : [],
+                    "OutputProperties" : [ 
+                        {
+                            "Name" : "Energy",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "EnergyMax",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Hunger",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Rule",
+                            "Type" : "System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "Targets",
+                            "Type" : "System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "TargetDistance",
+                            "Type" : "System.Double, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "AgentReference",
+                            "Type" : "WolvesModel.Agents.Wolf, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }, 
+                        {
+                            "Name" : "ServiceID",
+                            "Type" : "System.Guid, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ]
+                }
+            ],
+            "LayerDescriptions" : [ 
+                {
+                    "Name" : "Grassland",
+                    "FullName" : "WolvesModel.Layers.Grassland, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "LayerType" : "BasicLayer",
+                    "InitializationProperties" : [],
+                    "OutputProperties" : [ 
+                        {
+                            "Name" : "DimensionX",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "DimensionY",
+                            "Type" : "System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                            "BaseType" : "PrimitiveParameter"
+                        }, 
+                        {
+                            "Name" : "WolfGrid",
+                            "Type" : "LIFE.Components.Environments.GridEnvironment.IGridEnvironment`1[[LIFE.Components.Agents.BasicAgents.Agents.GridAgent`1[[WolvesModel.Agents.Wolf, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], BasicAgents, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null]], GridEnvironment, Version=2.4.0.1, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ]
+                }, 
+                {
+                    "Name" : "WolfLayer",
+                    "FullName" : "WolvesModel.Layers.WolfLayer, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "LayerType" : "BasicLayer",
+                    "ConstructorParameters" : [ 
+                        {
+                            "Name" : "grassland",
+                            "Type" : "WolvesModel.Layers.IGrassland, WolvesModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+                            "BaseType" : "LifeInitializedParameter"
+                        }
+                    ],
+                    "InitializationProperties" : [],
+                    "OutputProperties" : []
+                }
+            ],
+            "LayerInitOrder" : [ 
+                "WolvesModel.Layers.Grassland", 
+                "WolvesModel.Layers.WolfLayer"
+            ]
+        }
+    }
+}
+]

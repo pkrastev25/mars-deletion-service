@@ -1,0 +1,15 @@
+[
+{
+    "_id" : ObjectId("5b069e857296b60001905d4b"),
+    "metadata" : {
+        "originalFileName" : "WolvesAndSheep.zip"
+    },
+    "filename" : "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0",
+    "aliases" : null,
+    "chunkSize" : NumberLong(261120),
+    "uploadDate" : ISODate("2018-05-24T11:14:13.770Z"),
+    "length" : NumberLong(6874113),
+    "contentType" : null,
+    "md5" : "ccc68c0562c3c9c66a0a24d9b2fa44c5"
+}
+]

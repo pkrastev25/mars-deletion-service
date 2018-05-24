@@ -1,0 +1,9 @@
+[
+    {
+        "_id" : ObjectId("5b06ad1257456e00015575ee"),
+    "AgentId" : "6174649e-b1ca-4019-b410-cab8b7c8e739",
+    "AgentType" : "Wolf",
+    "Layer" : "WolfLayer",
+    "CreationTick" : 0
+}
+]

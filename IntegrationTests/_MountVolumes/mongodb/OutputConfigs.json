@@ -1,0 +1,145 @@
+[
+{
+    "_id" : ObjectId("5b06a796d1dd991e5b4ed875"),
+    "ModelId" : "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0",
+    "ConfigId" : "2462a6b6-5e07-48b4-b3e3-b3b207d55f4e",
+    "ConfigName" : "Config 01",
+    "OutputTarget" : "MongoDB",
+    "OutputParams" : "--full-output = true",
+    "SpatialType" : "Grid",
+    "Layers" : [ 
+        {
+            "Name" : "Grassland",
+            "Type" : "BasicLayer",
+            "Agents" : [ 
+                {
+                    "TypeName" : "Grass",
+                    "FullName" : "WolvesModel.Agents.Grass, WolvesModel, Version=1.0.0, Culture=neutral, PublicKeyToken=null",
+                    "OutputEnabled" : true,
+                    "Frequency" : 1,
+                    "SpatialType" : "Grid",
+                    "SpatialOutput" : "moving",
+                    "OutputProperties" : [ 
+                        {
+                            "Type" : "int32",
+                            "Name" : "FoodValue",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "FoodValueMax",
+                            "Selected" : true,
+                            "Static" : false
+                        }
+                    ]
+                }, 
+                {
+                    "TypeName" : "Sheep",
+                    "FullName" : "WolvesModel.Agents.Sheep, WolvesModel, Version=1.0.0, Culture=neutral, PublicKeyToken=null",
+                    "OutputEnabled" : true,
+                    "Frequency" : 1,
+                    "SpatialType" : "Grid",
+                    "SpatialOutput" : "moving",
+                    "OutputProperties" : [ 
+                        {
+                            "Type" : "enum",
+                            "Name" : "Sex",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "Energy",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "EnergyMax",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "Hunger",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "string",
+                            "Name" : "Rule",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "string",
+                            "Name" : "Targets",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "double",
+                            "Name" : "TargetDistance",
+                            "Selected" : true,
+                            "Static" : false
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "Name" : "WolfLayer",
+            "Type" : "BasicLayer",
+            "Agents" : [ 
+                {
+                    "TypeName" : "Wolf",
+                    "FullName" : "WolvesModel.Agents.Wolf, WolvesModel, Version=1.0.0, Culture=neutral, PublicKeyToken=null",
+                    "OutputEnabled" : true,
+                    "Frequency" : 1,
+                    "SpatialType" : "Grid",
+                    "SpatialOutput" : "moving",
+                    "OutputProperties" : [ 
+                        {
+                            "Type" : "int32",
+                            "Name" : "Energy",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "EnergyMax",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "int32",
+                            "Name" : "Hunger",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "string",
+                            "Name" : "Rule",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "string",
+                            "Name" : "Targets",
+                            "Selected" : true,
+                            "Static" : false
+                        }, 
+                        {
+                            "Type" : "double",
+                            "Name" : "TargetDistance",
+                            "Selected" : true,
+                            "Static" : false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+]

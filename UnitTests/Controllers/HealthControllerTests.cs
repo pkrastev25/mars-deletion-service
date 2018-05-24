@@ -10,7 +10,7 @@ namespace UnitTests.Controllers
         public void HealthController_SuccessfulRequest_ReturnsOkResult()
         {
             // Arrange
-            var healthController = new HealtController();
+            var healthController = new HealthController();
 
             // Act
             var result = healthController.HealthCheck();

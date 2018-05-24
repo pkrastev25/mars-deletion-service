@@ -10,7 +10,7 @@ using Xunit;
 
 namespace UnitTests.ResourceTypes.Metadata
 {
-    public class MetadataClientTests
+    public class FileClientTests
     {
         [Fact]
         public async void DeleteResource_NotFoundStatusCode_NoExceptionThrown()
@@ -25,17 +25,15 @@ namespace UnitTests.ResourceTypes.Metadata
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
-                httpService.Object,
-                logerService.Object
+            var fileClient = new FileClient(
+                httpService.Object
             );
             Exception exception = null;
 
             try
             {
                 // Act
-                await metadataClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
+                await fileClient.DeleteResource(DependantResourceDataMocks.MockDependantResourceModel());
             }
             catch (Exception e)
             {
@@ -59,17 +57,15 @@ namespace UnitTests.ResourceTypes.Metadata
             httpService
                 .Setup(m => m.DeleteAsync(It.IsAny<string>()))
                 .ReturnsAsync(httpResponseMessage);
-            var logerService = new Mock<ILoggerService>();
-            var metadataClient = new MetadataClient(
-                httpService.Object,
-                logerService.Object
+            var fileClient = new FileClient(
+                httpService.Object
             );
             Exception exception = null;
 
             try
             {
                 // Act
-                await metadataClient.DeleteResource(
+                await fileClient.DeleteResource(
                     DependantResourceDataMocks.MockDependantResourceModel()
                 );
             }

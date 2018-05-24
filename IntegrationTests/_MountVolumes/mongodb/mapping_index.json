@@ -1,0 +1,50 @@
+[
+{
+    "_id" : "d32a9ad7-a874-496a-a025-40e62dcd9886",
+    "mappings" : [ 
+        {
+            "target" : {
+                "agent" : "Sheep",
+                "target_type" : "parameter_target",
+                "parameter" : "sex",
+                "layer" : "Grassland"
+            },
+            "mapping_type" : "value",
+            "value" : "Male"
+        }, 
+        {
+            "target" : {
+                "agent" : "Sheep",
+                "target_type" : "type_parameter_target",
+                "parameter" : "InstanceCount",
+                "layer" : "Grassland"
+            },
+            "mapping_type" : "value",
+            "value" : 100
+        }, 
+        {
+            "target" : {
+                "agent" : "Grass",
+                "target_type" : "type_parameter_target",
+                "parameter" : "InstanceCount",
+                "layer" : "Grassland"
+            },
+            "mapping_type" : "value",
+            "value" : 100
+        }, 
+        {
+            "target" : {
+                "agent" : "Wolf",
+                "target_type" : "type_parameter_target",
+                "parameter" : "InstanceCount",
+                "layer" : "WolfLayer"
+            },
+            "mapping_type" : "value",
+            "value" : 100
+        }
+    ],
+    "format_version" : 1,
+    "LogicalChangeTime" : 1527161810,
+    "model_identifier" : "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0"
+}
+]
