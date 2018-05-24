@@ -58,7 +58,7 @@ integrationTests:
   script:
    - cd IntegrationTests
    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
-   - docker-compose run deletion-svc-tests /maxcpucount
+   - docker-compose run deletion-svc-tests
 
 deploy:
   stage: deploy

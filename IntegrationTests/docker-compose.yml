@@ -52,8 +52,6 @@ services:
         
   project-postgres:
     image: nexus.informatik.haw-hamburg.de/postgres:9.6-alpine
-    volumes:
-      - ./_MountVolumes/project-postgres:/data
     environment:
       - POSTGRES_DB=project
       - POSTGRES_USER=projectsvc
@@ -72,6 +70,7 @@ services:
     links:
       - project-postgres
     depends_on:
+      - project-postgress-seed
       - project-postgres
     expose:
       - 8080
@@ -115,11 +114,14 @@ services:
       - 8080
       
   resultcfg-svc:
-    image: nexus.informatik.haw-hamburg.de/resultcfg-svc:latest
+    # TODO: Change once bug is fixed
+    image: nexus.informatik.haw-hamburg.de/resultcfg-svc:2.0.3
     links:
       - mongodb
+      - result-mongodb
     depends_on:
       - mongodb
+      - result-mongodb
     expose:
       - 8080
       
@@ -133,8 +135,7 @@ services:
       - 8080
       
   database-utility-svc:
-    # TODO: Change image tag once merged
-    image: nexus.informatik.haw-hamburg.de/database-utility-service:dev
+    image: nexus.informatik.haw-hamburg.de/database-utility-service:latest
     volumes:
       - ./_MountVolumes/database-utility-svc:/config
     links:
