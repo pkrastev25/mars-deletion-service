@@ -3,13 +3,12 @@ version: '3'
 services:
   mongo-seed:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
-    restart: on-failure
     volumes:
-      - ./_MountVolumes/mongodb:/data
+      - ./_MountVolumes/mongodb:/seed-data
     entrypoint:
       - sh
     command:
-      - ./data/seed_data.sh
+      - ./seed-data/seed_data.sh
     links:
       - mongodb
     depends_on:
@@ -17,7 +16,6 @@ services:
       
   result-mongo-seed:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
-    restart: on-failure
     volumes:
       - ./_MountVolumes/result-mongodb:/data
     entrypoint:
@@ -45,6 +43,10 @@ services:
 
   mongodb:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    volumes:
+      - ./_MountVolumes/mongodb/data:/data/db
+    ports:
+      - 27017:27017
     expose:
       - 27017
 
