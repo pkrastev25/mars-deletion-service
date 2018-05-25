@@ -61,11 +61,10 @@ services:
       - POSTGRES_PASSWORD=mariokart102
     expose:
       - 5432
-    ports:
-      - 5432:5432
       
   project-svc:
     image: nexus.informatik.haw-hamburg.de/project-svc:latest
+    restart: on-failure
     environment:
       - POSTGRES_DB=project
       - POSTGRES_USER=projectsvc
@@ -93,7 +92,6 @@ services:
     restart: always
     expose:
       - 80
-      - 8080
 
   # The actual metadata-svc
   metadata-service:
@@ -151,7 +149,7 @@ services:
     image: nexus.informatik.haw-hamburg.de/marking-svc:latest
     environment:
       - PROJECT_SVC_URL=project-svc:8080
-      - METADATA_SVC_URL=metadata-svc:8080
+      - METADATA_SVC_URL=metadata-svc:80
       - SCENARIO_SVC_URL=scenario-svc:8080
       - RESULT_CONFIG_SVC_URL=resultcfg-svc:80
       - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
