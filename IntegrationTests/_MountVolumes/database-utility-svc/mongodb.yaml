@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: result-mongodb
+  labels:
+    name: result-mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    role: result-mongodb
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: result-mongodb
+spec:
+  serviceName: "result-mongodb"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        role: result-mongodb
+        environment: test
+    spec:
+      serviceAccount: gitlab-serviceaccount
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: result-mongodb
+          image: mongo
+          command:
+            - mongod
+            - "--replSet"
+            - rs0
+            - "--bind_ip"
+            - 0.0.0.0
+            - "--smallfiles"
+            - "--noprealloc"
+          ports:
+            - containerPort: 27017
+          #securityContext:
+          #  privileged: true
+          volumeMounts:
+            - name: result-mongodb-persistent-storage
+              mountPath: /data/db
+        - name: result-mongodb-sidecar
+          image: cvallance/mongo-k8s-sidecar
+          env:
+            - name: MONGO_SIDECAR_POD_LABELS
+              value: "role=result-mongodb,environment=test"
+            - name: KUBE_NAMESPACE
+              value: "mars-database-utility-service"
+  volumeClaimTemplates:
+  - metadata:
+      name: result-mongodb-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    name: mongodb
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    role: mongodb
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: mongodb
+spec:
+  serviceName: "mongodb"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        role: mongodb
+        environment: test
+    spec:
+      serviceAccount: gitlab-serviceaccount
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongodb
+          image: mongo
+          command:
+            - mongod
+            - "--replSet"
+            - rs0
+            - "--bind_ip"
+            - 0.0.0.0
+            - "--smallfiles"
+            - "--noprealloc"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-persistent-storage
+              mountPath: /data/db
+        - name: mongodb-sidecar
+          image: cvallance/mongo-k8s-sidecar
+          env:
+            - name: MONGO_SIDECAR_POD_LABELS
+              value: "role=mongodb,environment=test"
+            - name: KUBE_NAMESPACE
+              value: "mars-database-utility-service"
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi

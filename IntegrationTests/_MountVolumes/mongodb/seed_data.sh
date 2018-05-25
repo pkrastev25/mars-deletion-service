@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 # file-svc
-mongorestore --host mongodb --port 27017 -db importFiles --archive=/data/importFiles.archive &&
+mongorestore --drop --host mongodb --port 27017 -db importFiles --archive=/seed-data/importFiles.bson
 
 # metadata -svc
-mongorestore --host mongodb --port 27017 -db import --archive=/data/import.archive &&
+mongorestore --drop --host mongodb --port 27017 -db import --archive=/seed-data/import.bson
 
 # scenario-svc
-mongorestore --host mongodb --port 27017 -db mars_websuite --archive=/data/mars_websuite.archive &&
+mongorestore --drop --host mongodb --port 27017 -db mars_websuite --archive=/seed-data/mars_websuite.bson
 
 # resultcfg-svc
-mongorestore --host mongodb --port 27017 -db Configs --archive=/data/Configs.archive &&
+mongorestore --drop --host mongodb --port 27017 -db Configs --archive=/seed-data/Configs.bson
 
 # sim-runner
-mongorestore --host mongodb --port 27017 -db mars-mission-control --archive=/data/mars-mission-control.archive
+mongorestore --drop --host mongodb --port 27017 -db mars-mission-control --archive=/seed-data/mars-mission-control.bson

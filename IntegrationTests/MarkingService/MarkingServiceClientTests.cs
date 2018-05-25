@@ -13,8 +13,8 @@ namespace IntegrationTests.MarkingService
         public async void CreateMarkSession_UnmarkedResources_ReturnsMarkSessionModel()
         {
             // Arrange
-            var resourceType = ResourceTypeEnum.Project;
-            var resourceId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
+            var resourceType = ResourceTypeEnum.Metadata;
+            var resourceId = "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0";
             var projectId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
             var markSessionType = MarkingServiceClient.MarkSessionTypeToBeDeleted;
             var httpService = new HttpService(new HttpClient());
@@ -87,7 +87,7 @@ namespace IntegrationTests.MarkingService
         }
 
         [Fact]
-        public async void DeleteEmptyMarkingSession_ValidMarkSessionId_NoExceptionThrown()
+        public async void DeleteEmptyMarkingSession_ValidMarkSessionId_ThrowsException()
         {
             // Arrange
             var markSessionId = "5b07def67aa54a0007b3db53";
@@ -106,7 +106,7 @@ namespace IntegrationTests.MarkingService
             }
 
             // Assert
-            Assert.Null(exception);
+            Assert.NotNull(exception);
         }
     }
 }
