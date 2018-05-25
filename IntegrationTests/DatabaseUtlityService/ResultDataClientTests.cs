@@ -18,7 +18,7 @@ namespace IntegrationTests.DatabaseUtlityService
             var dependantResourceModel = new DependantResourceModel
             {
                 ResourceType = ResourceTypeEnum.ResultData,
-                ResourceId = "4ab312c4-801d-4fa1-b8d9-4e9b24c5dd4a"
+                ResourceId = "7ada0dd6-0bd8-4872-9344-25555ca652a8"
             };
             var httpService = new HttpService(new HttpClient());
             var resultDataClient = new ResultDataClient(httpService);

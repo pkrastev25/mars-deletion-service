@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-pg_restore --host project-postgres --port 5432 --username projectsvc --password mariokart102 -f /data/data.sql --verbose
+# Recreate the DB using database-utility-svc:8090/storage/postgres-projects
+PGPASSWORD=mariokart102 psql --host project-postgres --port 5432 -U projectsvc -d project -f /data/project-postgres.sql

@@ -17,7 +17,7 @@ namespace IntegrationTests.ScenarioService
             var dependantResourceModel = new DependantResourceModel
             {
                 ResourceType = ResourceTypeEnum.Scenario,
-                ResourceId = "6c40eb45-1e21-435e-81c8-895e55c6c5d8"
+                ResourceId = "6aad965db-fceb-4ee2-bd06-c89ab182ca4c"
             };
             var httpService = new HttpService(new HttpClient());
             var scenarioClient = new ScenarioClient(httpService);

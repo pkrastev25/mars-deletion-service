@@ -17,7 +17,7 @@ namespace IntegrationTests.ResultConfigService
             var dependantResourceModel = new DependantResourceModel
             {
                 ResourceType = ResourceTypeEnum.ResultConfig,
-                ResourceId = "6c40eb45-1e21-435e-81c8-895e55c6c5d8"
+                ResourceId = "e019f476-b413-4ee7-965b-a4c0389cd086"
             };
             var httpService = new HttpService(new HttpClient());
             var resultConfigClient = new ResultConfigClient(httpService);

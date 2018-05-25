@@ -13,9 +13,9 @@ namespace IntegrationTests.MarkingService
         public async void CreateMarkSession_UnmarkedResources_ReturnsMarkSessionModel()
         {
             // Arrange
-            var resourceType = ResourceTypeEnum.Metadata;
-            var resourceId = "45db3205-83be-42a1-af14-6a03df9d9536";
-            var projectId = "73fcb3bf-bc8b-4c8b-801f-8a90d92bf9c2";
+            var resourceType = ResourceTypeEnum.Project;
+            var resourceId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
+            var projectId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
             var markSessionType = MarkingServiceClient.MarkSessionTypeToBeDeleted;
             var httpService = new HttpService(new HttpClient());
             var markingServiceClient = new MarkingServiceClient(httpService);
@@ -36,7 +36,7 @@ namespace IntegrationTests.MarkingService
         public async void GetMarkSessionById_ValidMarkSessionId_ReturnsMarkSessionModel()
         {
             // Arrange
-            var markSessionId = "5b06ba377aa54a0007b3db3d";
+            var markSessionId = "5b07decf7aa54a0007b3db51";
             var httpService = new HttpService(new HttpClient());
             var markingServiceClient = new MarkingServiceClient(httpService);
 
@@ -66,7 +66,7 @@ namespace IntegrationTests.MarkingService
         public async void UpdateMarkSessionType_MarkSessionModelExists_NoExceptionThrown()
         {
             // Arrange
-            var markSessionId = "5b02c4ccd3b6f3000710485d";
+            var markSessionId = "5b07dee57aa54a0007b3db52";
             var markSessionType = MarkingServiceClient.MarkSessionTypeToBeDeleted;
             var httpService = new HttpService(new HttpClient());
             var markingServiceClient = new MarkingServiceClient(httpService);
@@ -90,7 +90,7 @@ namespace IntegrationTests.MarkingService
         public async void DeleteEmptyMarkingSession_ValidMarkSessionId_NoExceptionThrown()
         {
             // Arrange
-            var markSessionId = "5b06d3ad7aa54a0007b3db41";
+            var markSessionId = "5b07def67aa54a0007b3db53";
             var httpService = new HttpService(new HttpClient());
             var markingServiceClient = new MarkingServiceClient(httpService);
             Exception exception = null;

@@ -14,11 +14,11 @@ namespace IntegrationTests.SimRunnerService
         public async void DeleteResource_ValidSimRunId_NoExceptionThrown()
         {
             // Arrange
-            var projectId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
+            var projectId = "be69cb8c-45e4-4d80-8d55-419984aa2151";
             var dependantResourceModel = new DependantResourceModel
             {
                 ResourceType = ResourceTypeEnum.SimRun,
-                ResourceId = "5b06acef52e35100015f04da"
+                ResourceId = "5b07ddd052e35100015f04e4"
             };
             var httpService = new HttpService(new HttpClient());
             var simRunClient = new SimRunClient(httpService);

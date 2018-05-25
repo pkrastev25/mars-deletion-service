@@ -17,7 +17,7 @@ namespace IntegrationTests.FileService
             var dependantResourceModel = new DependantResourceModel
             {
                 ResourceType = ResourceTypeEnum.Metadata,
-                ResourceId = "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0"
+                ResourceId = "c9de8a5e-1ab1-431f-a759-f44d7eef4e19"
             };
             var httpService = new HttpService(new HttpClient());
             var fileClient = new FileClient(httpService);
