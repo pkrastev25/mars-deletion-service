@@ -13,4 +13,4 @@ mongorestore --gzip --host mongodb --port 27017 -db mars_websuite --archive=/dat
 mongorestore --gzip --host mongodb --port 27017 -db Configs --archive=/data/Configs.agz &&
 
 # sim-runner
-mongorestore --gzip --host mongodb --port 27017 -db mars-mission-control --archive=/data/mars-mission-control.agz &&
+mongorestore --gzip --host mongodb --port 27017 -db mars-mission-control --archive=/data/mars-mission-control.agz
