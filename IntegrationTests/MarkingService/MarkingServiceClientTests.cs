@@ -14,8 +14,8 @@ namespace IntegrationTests.MarkingService
         {
             // Arrange
             var resourceType = ResourceTypeEnum.Metadata;
-            var resourceId = "4439722e-a6d0-4f7a-9d33-0cc5a2a66da0";
-            var projectId = "623be379-ed40-49f3-bdd8-416f8cd0faa6";
+            var resourceId = "45db3205-83be-42a1-af14-6a03df9d9536";
+            var projectId = "73fcb3bf-bc8b-4c8b-801f-8a90d92bf9c2";
             var markSessionType = MarkingServiceClient.MarkSessionTypeToBeDeleted;
             var httpService = new HttpService(new HttpClient());
             var markingServiceClient = new MarkingServiceClient(httpService);
