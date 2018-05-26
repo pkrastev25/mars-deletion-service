@@ -75,8 +75,6 @@ services:
   metadata-svc:
     build: ./_ReverseProxies/metadata-svc
     restart: always
-    expose:
-      - 80
 
   # The actual metadata-svc
   metadata-service:
@@ -102,8 +100,6 @@ services:
   resultcfg-svc:
     build: ./_ReverseProxies/resultcfg-svc
     restart: always
-    expose:
-      - 80
   
   # The actual resultcfg-svc
   resultcfg-service:
@@ -117,7 +113,7 @@ services:
       - mongodb
       - result-mongodb
     expose:
-      - 8080
+      - 80
       
   sim-runner-svc:
     image: nexus.informatik.haw-hamburg.de/sim-runner-svc:latest
@@ -189,10 +185,11 @@ services:
       - project-postgres
       - project-svc
       - file-svc
-      - metadata-service
       - metadata-svc
+      - metadata-service
       - scenario-svc
       - resultcfg-svc
+      - resultcfg-service
       - sim-runner-svc
       - database-utility-svc
       - marking-svc
