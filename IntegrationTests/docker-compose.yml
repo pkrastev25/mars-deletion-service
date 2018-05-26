@@ -29,15 +29,11 @@ services:
 
   mongodb:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
-    volumes:
-      - ./_MountVolumes/mongodb/data:/data/db
     expose:
       - 27017
 
   result-mongodb:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
-    volumes:
-      - ./_MountVolumes/mongodb/data:/data/db
     expose:
       - 27017
     ports:
@@ -147,9 +143,7 @@ services:
     image: nexus.informatik.haw-hamburg.de/marking-svc:latest
     environment:
       - PROJECT_SVC_URL=project-svc:8080
-      - METADATA_SVC_URL=metadata-svc:80
       - SCENARIO_SVC_URL=scenario-svc:8080
-      - RESULT_CONFIG_SVC_URL=resultcfg-service:8080
       - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
       - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
       - MONGO_DB_SVC_URL=mongodb://mongodb:27017
@@ -169,7 +163,6 @@ services:
     environment:
       - FILE_SVC_URL=file-svc:8080
       - SCENARIO_SVC_URL=scenario-svc:8080
-      - RESULT_CONFIG_SVC_URL=resultcfg-service:8080
       - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
       - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
       - MARKING_SVC_URL=marking-svc:80
