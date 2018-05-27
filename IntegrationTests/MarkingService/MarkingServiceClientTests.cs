@@ -87,7 +87,7 @@ namespace IntegrationTests.MarkingService
         }
 
         [Fact]
-        public async void DeleteEmptyMarkingSession_ValidMarkSessionId_ThrowsException()
+        public async void DeleteEmptyMarkingSession_MissingProjectId_ThrowsException()
         {
             // Arrange
             var markSessionId = "5b07def67aa54a0007b3db53";

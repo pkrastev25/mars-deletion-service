@@ -31,13 +31,15 @@ services:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
     expose:
       - 27017
+    ports:
+      - 27017:27017
 
   result-mongodb:
     image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
     expose:
       - 27017
     ports:
-      - 27017:27017
+      - 27018:27017
         
   project-postgres:
     image: nexus.informatik.haw-hamburg.de/postgres:9.6-alpine

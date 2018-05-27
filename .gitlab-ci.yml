@@ -48,7 +48,6 @@ createDeletionSvcTestEnvironment:
     - sh ./start.sh
 
 integrationTests:
-  when: manual
   stage: integrationTests
   image: ${DOCKER_REGISTRY}/deletion-svc-test-env
   services:
