@@ -47,6 +47,7 @@ createDeletionSvcTestEnvironment:
   tags:
     - k8s
   script:
+    - docker login -u $NEXUS_USER -p $NEXUS_PW $NEXUS_CACHE
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $GITLAB_REGISTRY
     - cd DeletionSvcTestEnvironment
     - sh ./start.sh
@@ -65,9 +66,9 @@ integrationTests:
 
 deploy:
   stage: deploy
-  image: $NEXUS_CACHE/docker:stable-dind
+  image: $NEXUS_CACHE/docker:icc-dind
   services:
-    - $NEXUS_CACHE/docker:stable-dind
+    - $NEXUS_CACHE/docker:icc-dind
   tags:
     - k8s
   only:
