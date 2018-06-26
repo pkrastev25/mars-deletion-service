@@ -32,8 +32,9 @@ namespace mars_deletion_svc.ResourceTypes.Scenario
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                 new FailedToDeleteResourceException(
-                    $"Failed to delete {dependantResourceModel} from scenario-svc!" +
-                    await response.IncludeStatusCodeAndMessageFromResponse()
+                    await response.FormatRequestAndResponse(
+                        $"Failed to delete {dependantResourceModel} from scenario-svc!"
+                    )
                 )
             );
         }

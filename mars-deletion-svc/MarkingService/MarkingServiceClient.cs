@@ -44,13 +44,15 @@ namespace mars_deletion_svc.MarkingService
                     return await response.Deserialize<MarkSessionModel>();
                 case HttpStatusCode.Conflict:
                     throw new ResourceConflictException(
-                        $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc!" +
-                        await response.IncludeStatusCodeAndMessageFromResponse()
+                        await response.FormatRequestAndResponse(
+                            $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc!"
+                        )
                     );
                 default:
                     throw new FailedToCreateMarkSessionException(
-                        $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc!" +
-                        await response.IncludeStatusCodeAndMessageFromResponse()
+                        await response.FormatRequestAndResponse(
+                            $"Failed to create mark session, type: {markSessionType} for {resourceType} with id: {resourceId} and projectId: {projectId} from marking-svc!"
+                        )
                     );
             }
         }
@@ -73,8 +75,9 @@ namespace mars_deletion_svc.MarkingService
                     );
                 default:
                     throw new FailedToGetMarkSessionException(
-                        $"Failed to get mark session with id: {markSessionId} from marking-svc!" +
-                        response.IncludeStatusCodeAndMessageFromResponse()
+                        await response.FormatRequestAndResponse(
+                            $"Failed to get mark session with id: {markSessionId} from marking-svc!"
+                        )
                     );
             }
         }
@@ -89,8 +92,9 @@ namespace mars_deletion_svc.MarkingService
 
             response.ThrowExceptionIfNotSuccessfulResponse(
                 new FailedToGetMarkSessionException(
-                    $"Failed to get mark sessions for type: {markSessionType} from marking-svc!" +
-                    await response.IncludeStatusCodeAndMessageFromResponse()
+                    await response.FormatRequestAndResponse(
+                        $"Failed to get mark sessions for type: {markSessionType} from marking-svc!"
+                    )
                 )
             );
 
@@ -114,8 +118,9 @@ namespace mars_deletion_svc.MarkingService
 
             response.ThrowExceptionIfNotSuccessfulResponse(
                 new FailedToUpdateMarkSessionException(
-                    $"Failed to update mark session with id: {markSessionId} for type: {markSessionType} from marking-svc!" +
-                    await response.IncludeStatusCodeAndMessageFromResponse()
+                    await response.FormatRequestAndResponse(
+                        $"Failed to update mark session with id: {markSessionId} for type: {markSessionType} from marking-svc!"
+                    )
                 )
             );
         }
@@ -130,8 +135,9 @@ namespace mars_deletion_svc.MarkingService
 
             response.ThrowExceptionIfNotSuccessfulResponseOrNot404Response(
                 new FailedToDeleteMarkSessionException(
-                    $"Failed to delete mark session with id: {markSessionId} from marking-svc!" +
-                    await response.IncludeStatusCodeAndMessageFromResponse()
+                    await response.FormatRequestAndResponse(
+                        $"Failed to delete mark session with id: {markSessionId} from marking-svc!"
+                    )
                 )
             );
         }

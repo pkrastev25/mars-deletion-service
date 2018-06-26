@@ -83,7 +83,7 @@ namespace mars_deletion_svc
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             // Must always be on top !!!
-            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<LoggerAndErrorHandlerMiddleware>();
 
             if (env.IsDevelopment())
             {

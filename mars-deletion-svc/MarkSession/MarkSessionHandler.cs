@@ -45,11 +45,15 @@ namespace mars_deletion_svc.MarkSession
         {
             var isMarkSessionDeleted = false;
             var taskExecutionDelayInSeconds = 1;
+            var restartCount = 0;
 
             while (!isMarkSessionDeleted)
             {
                 try
                 {
+                    _loggerService.LogBackgroundJobInfoEvent(
+                        $"Job for mark session with id: {markSessionId} will start in {taskExecutionDelayInSeconds} second/s, restart count: {restartCount}"
+                    );
                     await Task.Delay(TimeSpan.FromSeconds(taskExecutionDelayInSeconds));
 
                     var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
@@ -64,10 +68,15 @@ namespace mars_deletion_svc.MarkSession
                 }
                 catch (Exception e)
                 {
-                    _loggerService.LogErrorEvent(e);
+                    _loggerService.LogBackgroundJobErrorEvent(e);
                     taskExecutionDelayInSeconds *= 2;
+                    restartCount++;
                 }
             }
+            
+            _loggerService.LogBackgroundJobInfoEvent(
+                $"Job for mark session with id: {markSessionId} completed!"
+            );
         }
     }
 }

@@ -63,15 +63,33 @@ namespace mars_deletion_svc.Utils
             }
         }
 
-        public static async Task<string> IncludeStatusCodeAndMessageFromResponse(
-            this HttpResponseMessage httpResponseMessage
+        public static async Task<string> FormatRequestAndResponse(
+            this HttpResponseMessage httpResponseMessage,
+            string fallbackMessage
         )
         {
-            var responseMessage = await httpResponseMessage.Content.ReadAsStringAsync();
-            responseMessage = string.IsNullOrEmpty(responseMessage) ? "None" : responseMessage;
-            
-            return
-                $" \n [REASON] response status code: {httpResponseMessage.StatusCode}, response message: {responseMessage}";
+            var requestFormat = fallbackMessage;
+            var responseFormat = "";
+
+            if (httpResponseMessage == null)
+            {
+                return fallbackMessage;
+            }
+
+            if (httpResponseMessage.RequestMessage != null)
+            {
+                requestFormat =
+                    $"REQUEST: {httpResponseMessage.RequestMessage.Method.Method} {httpResponseMessage.RequestMessage.RequestUri}";
+            }
+
+            if (httpResponseMessage.Content != null)
+            {
+                var responseMessage = await httpResponseMessage.Content.ReadAsStringAsync();
+                responseMessage = string.IsNullOrEmpty(responseMessage) ? "None" : responseMessage;
+                responseFormat = $"RESPONSE: status code: {httpResponseMessage.StatusCode}, message: {responseMessage}";
+            }
+
+            return $"{requestFormat}, {responseFormat}";
         }
     }
 }

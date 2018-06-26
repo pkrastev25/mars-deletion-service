@@ -164,9 +164,10 @@ namespace UnitTests.Extensions
         }
 
         [Fact]
-        public async void IncludeStatusCodeAndMessageFromResponse_ConflictStatusCode_ReturnsString()
+        public async void FormatRequestAndResponse_ConflictStatusCode_ReturnsString()
         {
             // Arrange
+            var fallbackMessage = "Some message";
             var httpResponseMessage = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.Conflict,
@@ -174,7 +175,7 @@ namespace UnitTests.Extensions
             };
 
             // Act
-            var result = await httpResponseMessage.IncludeStatusCodeAndMessageFromResponse();
+            var result = await httpResponseMessage.FormatRequestAndResponse(fallbackMessage);
 
             // Assert
             Assert.NotEmpty(result);

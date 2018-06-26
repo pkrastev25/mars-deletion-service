@@ -36,6 +36,8 @@ namespace mars_deletion_svc.Services
             CancellationToken cancellationToken
         )
         {
+            _loggerService.LogStartupInfoEvent("Hosted service started! Attemping to delete legacy mark sessions.");
+
             try
             {
                 var markSessionModelsToBeDeleted = await _markingServiceClient.GetMarkSessionsByMarkSessionType(
@@ -54,8 +56,10 @@ namespace mars_deletion_svc.Services
             }
             catch (Exception e)
             {
-                _loggerService.LogErrorEvent(e);
+                _loggerService.LogStartupErrorEvent(e);
             }
+
+            _loggerService.LogStartupInfoEvent("Hosted service stopped!");
         }
     }
 }

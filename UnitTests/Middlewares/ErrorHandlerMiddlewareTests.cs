@@ -18,7 +18,7 @@ namespace UnitTests.Middlewares
             // Arrange
             var httpContext = new DefaultHttpContext();
             var loggerService = new Mock<ILoggerService>();
-            var errorHandlerMiddleware = new ErrorHandlerMiddleware(
+            var errorHandlerMiddleware = new LoggerAndErrorHandlerMiddleware(
                 async innerHttpContext => await Task.FromException(new ResourceConflictException("")),
                 loggerService.Object
             );
@@ -36,7 +36,7 @@ namespace UnitTests.Middlewares
             // Arrange
             var httpContext = new DefaultHttpContext();
             var loggerService = new Mock<ILoggerService>();
-            var errorHandlerMiddleware = new ErrorHandlerMiddleware(
+            var errorHandlerMiddleware = new LoggerAndErrorHandlerMiddleware(
                 async innerHttpContext => await Task.FromException(new Exception("")),
                 loggerService.Object
             );

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace mars_deletion_svc.Middlewares
 {
-    public class ErrorHandlerMiddleware
+    public class LoggerAndErrorHandlerMiddleware
     {
         private const int StatusCodeNoContent = 204;
         private const int StatusCodeConflict = 409;
@@ -16,7 +16,7 @@ namespace mars_deletion_svc.Middlewares
         private readonly RequestDelegate _requestDelegate;
         private readonly ILoggerService _loggerService;
 
-        public ErrorHandlerMiddleware(
+        public LoggerAndErrorHandlerMiddleware(
             RequestDelegate requestDelegate,
             ILoggerService loggerService
         )
@@ -32,12 +32,26 @@ namespace mars_deletion_svc.Middlewares
             try
             {
                 await _requestDelegate(httpContext);
+                _loggerService.LogInfoEvent(
+                    CreateRequestAndResponseMessage(httpContext)
+                );
             }
             catch (Exception e)
             {
-                _loggerService.LogErrorEvent(e);
                 await HandleException(httpContext, e);
+                _loggerService.LogInfoWithErrorEvent(
+                    CreateRequestAndResponseMessage(httpContext),
+                    e
+                );
             }
+        }
+        
+        private string CreateRequestAndResponseMessage(
+            HttpContext httpContext
+        )
+        {
+            return
+                $"{httpContext.Response.StatusCode} {httpContext.Request.Method} {httpContext.Request.Path.Value}{httpContext.Request.QueryString.Value}";
         }
 
         private Task HandleException(
