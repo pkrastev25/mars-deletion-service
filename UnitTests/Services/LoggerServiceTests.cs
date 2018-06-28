@@ -19,7 +19,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogInfoEvent(messageToWriteToConsole);
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }
@@ -37,7 +37,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogInfoWithErrorEvent(messageToWriteToConsole, exception);
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }
@@ -54,7 +54,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogBackgroundJobInfoEvent(messageToWriteToConsole);
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }
@@ -71,7 +71,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogBackgroundJobErrorEvent(new Exception(messageToWriteToConsole));
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }
@@ -88,7 +88,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogStartupInfoEvent(messageToWriteToConsole);
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }
@@ -105,7 +105,7 @@ namespace UnitTests.Services
                 // Act
                 loggerService.LogStartupErrorEvent(new Exception(messageToWriteToConsole));
 
-                // Asser
+                // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
             }
         }

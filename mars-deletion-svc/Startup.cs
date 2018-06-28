@@ -58,7 +58,7 @@ namespace mars_deletion_svc
             });
 
             // Services
-            services.AddScoped<IHttpService, HttpService>();
+            services.AddTransient<IHttpService, HttpService>();
             services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<IHostedService, HostedStartupService>();
 

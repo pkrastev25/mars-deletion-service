@@ -82,7 +82,7 @@ namespace UnitTests.ResourceTypes.SimPlan
             }
 
             // Assert
-            Assert.IsType<FailedToGetResourceException>(exception);
+            Assert.NotNull(exception);
         }
     }
 }

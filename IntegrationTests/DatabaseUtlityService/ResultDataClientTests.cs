@@ -2,7 +2,6 @@
 using System.Net.Http;
 using mars_deletion_svc.MarkingService.Models;
 using mars_deletion_svc.ResourceTypes.Enums;
-using mars_deletion_svc.ResourceTypes.ResultConfig;
 using mars_deletion_svc.ResourceTypes.ResultData;
 using mars_deletion_svc.Services;
 using Xunit;

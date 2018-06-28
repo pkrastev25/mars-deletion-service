@@ -75,7 +75,7 @@ namespace UnitTests.ResourceTypes.Scenario
             }
 
             // Assert
-            Assert.IsType<FailedToDeleteResourceException>(exception);
+            Assert.NotNull(exception);
         }
     }
 }
