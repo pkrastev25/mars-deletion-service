@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using IntegrationTests._ResourceTypeHelpers;
+using IntegrationTests._ResourceTypeHelpers.Models;
 using mars_deletion_svc.MarkingService;
 using mars_deletion_svc.ResourceTypes.Enums;
 using mars_deletion_svc.Services;
@@ -29,7 +31,13 @@ namespace IntegrationTests.MarkingService
             );
 
             // Assert
+            // Verify that the mark session is created
             Assert.NotNull(result);
+
+            var metadata = await ResourceTypeHelper.RetreiveMetadata(resourceId);
+
+            // Verify that the metadata is marked
+            Assert.Equal(MetadataModel.ToBeDeletedState, metadata.State);
         }
 
         [Fact]

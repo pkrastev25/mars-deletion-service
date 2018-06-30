@@ -52,7 +52,7 @@ namespace mars_deletion_svc.MarkSession
                 try
                 {
                     _loggerService.LogBackgroundJobInfoEvent(
-                        $"Job for mark session with id: {markSessionId} will start in {taskExecutionDelayInSeconds} second/s, restart count: {restartCount}"
+                        $"Deletion job for mark session with id: {markSessionId} will start in {taskExecutionDelayInSeconds} second/s, restart count: {restartCount}"
                     );
                     await Task.Delay(TimeSpan.FromSeconds(taskExecutionDelayInSeconds));
 
@@ -75,7 +75,7 @@ namespace mars_deletion_svc.MarkSession
             }
             
             _loggerService.LogBackgroundJobInfoEvent(
-                $"Job for mark session with id: {markSessionId} completed!"
+                $"Deletion job for mark session with id: {markSessionId} completed!"
             );
         }
     }

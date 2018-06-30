@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using Hangfire;
 using Hangfire.Mongo;
 using mars_deletion_svc.BackgroundJobs;
@@ -49,11 +50,17 @@ namespace mars_deletion_svc
             services.AddMvc();
 
             // Hangfire config
+            var hangfireStorageOptions = new MongoStorageOptions
+            {
+                // The time interval after which Hangfire will re-enqueue aborted or failed jobs if the server dies unexpectedly
+                InvisibilityTimeout = TimeSpan.FromMinutes(1)
+            };
             services.AddHangfire(configuration =>
             {
                 configuration.UseMongoStorage(
                     Constants.Constants.MongoDbConnection,
-                    Constants.Constants.MongoDbHangfireName
+                    Constants.Constants.MongoDbHangfireName,
+                    hangfireStorageOptions
                 );
             });
 

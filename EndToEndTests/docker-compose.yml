@@ -1,0 +1,196 @@
+version: '3'
+
+services:
+  mongo-seed:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    volumes:
+      - ./_MountVolumes/mongodb:/seed-data
+    entrypoint:
+      - sh
+    command:
+      - ./seed-data/seed_data.sh
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+      
+  result-mongo-seed:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    volumes:
+      - ./_MountVolumes/result-mongodb:/seed-data
+    entrypoint:
+      - sh
+    command:
+      - ./seed-data/seed_data.sh
+    links:
+      - result-mongodb
+    depends_on:
+      - result-mongodb
+
+  mongodb:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+
+  result-mongodb:
+    image: nexus.informatik.haw-hamburg.de/mongo:3.4.1
+    expose:
+      - 27017
+    ports:
+      - 27018:27017
+        
+  project-postgres:
+    image: nexus.informatik.haw-hamburg.de/postgres:9.6-alpine
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=projectsvc
+      - POSTGRES_PASSWORD=mariokart102
+    expose:
+      - 5432
+      
+  project-svc:
+    image: nexus.informatik.haw-hamburg.de/project-svc:latest
+    environment:
+      - POSTGRES_DB=project
+      - POSTGRES_USER=projectsvc
+      - POSTGRES_PASSWORD=mariokart102
+    links:
+      - project-postgres
+    depends_on:
+      - project-postgres
+    expose:
+      - 8080
+
+  file-svc:
+    image: nexus.informatik.haw-hamburg.de/file-svc:latest
+    links:
+      - mongodb
+      - metadata-svc
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+
+  # Reverse proxy which has the same host name as the metadata-svc
+  metadata-svc:
+    build: ./_ReverseProxies/metadata-svc
+    restart: always
+
+  # The actual metadata-svc
+  metadata-service:
+    image: nexus.informatik.haw-hamburg.de/metadata-svc:latest
+    links:
+      - mongodb
+      - metadata-svc
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+
+  scenario-svc:
+    image: docker-hub.informatik.haw-hamburg.de/mars/mars-scenario-svc/scenario-svc:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+  
+  # Reverse proxy which has the same host name as the resultcfg-svc
+  resultcfg-svc:
+    build: ./_ReverseProxies/resultcfg-svc
+    restart: always
+  
+  # The actual resultcfg-svc
+  resultcfg-service:
+    image: nexus.informatik.haw-hamburg.de/resultcfg-svc:2.0.3
+    links:
+      - resultcfg-svc
+      - mongodb
+      - result-mongodb
+    depends_on:
+      - mongodb
+      - result-mongodb
+    expose:
+      - 80
+      
+  sim-runner-svc:
+    image: nexus.informatik.haw-hamburg.de/sim-runner-svc:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    expose:
+      - 8080
+      
+  database-utility-svc:
+    image: nexus.informatik.haw-hamburg.de/database-utility-service:latest
+    volumes:
+      - ./_MountVolumes/database-utility-svc:/config
+    links:
+      - result-mongodb
+    depends_on:
+      - result-mongodb
+    expose:
+      - 8090
+      
+  marking-svc:
+    image: docker-hub.informatik.haw-hamburg.de/mars/mars-marking-svc/marking-svc:latest
+    environment:
+      - PROJECT_SVC_URL=project-svc:8080
+      - SCENARIO_SVC_URL=scenario-svc:8080
+      - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
+      - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
+      - MONGO_DB_SVC_URL=mongodb://mongodb:27017
+    links:
+      - mongodb
+      - project-svc
+      - metadata-svc
+      - scenario-svc
+      - resultcfg-svc
+      - sim-runner-svc
+      - database-utility-svc
+    expose:
+      - 80
+
+  deletion-svc-tests:
+    image: nexus.informatik.haw-hamburg.de/microsoft/dotnet:2.0.0-sdk
+    environment:
+      - FILE_SVC_URL=file-svc:8080
+      - SCENARIO_SVC_URL=scenario-svc:8080
+      - SIM_RUNNER_SVC_URL=sim-runner-svc:8080
+      - DATABASE_UTILITY_SVC_URL=database-utility-svc:8090
+      - MARKING_SVC_URL=marking-svc:80
+      - MONGO_DB_SVC_URL=mongodb://mongodb:27017
+    volumes:
+      - ../:/mars-deletion-svc
+    entrypoint:
+      - sh
+    command:
+      - ./mars-deletion-svc/IntegrationTests/_MountVolumes/deletion-svc-tests/run_tests.sh
+    links:
+      - mongodb
+      - file-svc
+      - scenario-svc
+      - resultcfg-svc
+      - sim-runner-svc
+      - database-utility-svc
+      - marking-svc
+    depends_on:
+      - mongo-seed
+      - result-mongo-seed
+      - mongodb
+      - result-mongodb
+      - project-postgres
+      - project-svc
+      - file-svc
+      - metadata-svc
+      - metadata-service
+      - scenario-svc
+      - resultcfg-svc
+      - resultcfg-service
+      - sim-runner-svc
+      - database-utility-svc
+      - marking-svc

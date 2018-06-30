@@ -12,7 +12,7 @@ dotnet publish -o out
 cd ..
 
 # In order to push images from your local machine, use:
-#docker login -u HAW_USER_NAME -p HAW_PASSWORD
+#docker login -u HAW_USER_NAME
 docker build -t ${GITLAB_REGISTRY}/${PROJECT}/${SERVICE_NAME}:dev .
 docker push ${GITLAB_REGISTRY}/${PROJECT}/${SERVICE_NAME}:dev
 

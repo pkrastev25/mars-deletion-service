@@ -90,7 +90,7 @@ services:
       - 8080
 
   scenario-svc:
-    image: nexus.informatik.haw-hamburg.de/scenario-svc:latest
+    image: docker-hub.informatik.haw-hamburg.de/mars/mars-scenario-svc/scenario-svc:latest
     links:
       - mongodb
     depends_on:
@@ -105,7 +105,6 @@ services:
   
   # The actual resultcfg-svc
   resultcfg-service:
-    # TODO: Change once bug is fixed
     image: nexus.informatik.haw-hamburg.de/resultcfg-svc:2.0.3
     links:
       - resultcfg-svc
@@ -138,7 +137,7 @@ services:
       - 8090
       
   marking-svc:
-    image: nexus.informatik.haw-hamburg.de/marking-svc:latest
+    image: docker-hub.informatik.haw-hamburg.de/mars/mars-marking-svc/marking-svc:latest
     environment:
       - PROJECT_SVC_URL=project-svc:8080
       - SCENARIO_SVC_URL=scenario-svc:8080
