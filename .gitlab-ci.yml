@@ -78,6 +78,7 @@ endToEndTests:
   script:
     - cd EndToEndTests
     - docker login -u $NEXUS_USER -p $NEXUS_PW $NEXUS_CACHE
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $GITLAB_REGISTRY
     - docker-compose run deletion-svc-tests
 
 deploy:
