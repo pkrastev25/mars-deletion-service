@@ -169,7 +169,7 @@ services:
     entrypoint:
       - sh
     command:
-      - ./mars-deletion-svc/IntegrationTests/_MountVolumes/deletion-svc-tests/run_tests.sh
+      - ./mars-deletion-svc/EndToEndTests/_MountVolumes/deletion-svc-tests/run_tests.sh
     links:
       - mongodb
       - file-svc
