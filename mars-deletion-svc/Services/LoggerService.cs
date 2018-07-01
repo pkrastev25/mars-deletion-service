@@ -80,7 +80,7 @@ namespace mars_deletion_svc.Services
             double performanceMetricInSeconds
         )
         {
-            return string.Format("|{0:###.#}s|", performanceMetricInSeconds);
+            return $"{performanceMetricInSeconds}s";
         }
     }
 }
