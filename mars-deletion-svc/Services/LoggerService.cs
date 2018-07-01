@@ -10,7 +10,7 @@ namespace mars_deletion_svc.Services
             string message
         )
         {
-            Console.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [INFO] {message}");
+            Console.WriteLine($"{IncludeTimestamp()} {IncludePerformanceMetric(performanceMetricInSeconds)} [INFO] {message}");
         }
 
         public void LogInfoWithErrorEvent(
@@ -22,7 +22,8 @@ namespace mars_deletion_svc.Services
             var errorMessage = error.InnerException == null
                 ? $"[ERROR] {error.Message}\n{error.StackTrace}"
                 : $"[ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}";
-            Console.Error.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [INFO] {message}\n{errorMessage}");
+            Console.Error.WriteLine(
+                $"{IncludeTimestamp()} {IncludePerformanceMetric(performanceMetricInSeconds)} [INFO] {message}\n{errorMessage}");
         }
 
         public void LogBackgroundJobInfoEvent(
@@ -30,9 +31,9 @@ namespace mars_deletion_svc.Services
             string message
         )
         {
-            Console.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][INFO] {message}");
+            Console.WriteLine($"{IncludeTimestamp()} {IncludePerformanceMetric(performanceMetricInSeconds)} [JOB][INFO] {message}");
         }
-        
+
         public void LogBackgroundJobInfoEvent(
             string message
         )
@@ -47,8 +48,8 @@ namespace mars_deletion_svc.Services
         {
             Console.Error.WriteLine(
                 error.InnerException == null
-                    ? $"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][ERROR] {error.Message}\n{error.StackTrace}"
-                    : $"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}"
+                    ? $"{IncludeTimestamp()} {IncludePerformanceMetric(performanceMetricInSeconds)} [JOB][ERROR] {error.Message}\n{error.StackTrace}"
+                    : $"{IncludeTimestamp()} {IncludePerformanceMetric(performanceMetricInSeconds)} [JOB][ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}"
             );
         }
 
@@ -73,6 +74,13 @@ namespace mars_deletion_svc.Services
         private string IncludeTimestamp()
         {
             return $"- {DateTime.Now} -";
+        }
+
+        private string IncludePerformanceMetric(
+            double performanceMetricInSeconds
+        )
+        {
+            return string.Format("|{0:###.#}s|", performanceMetricInSeconds);
         }
     }
 }
