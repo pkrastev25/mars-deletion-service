@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using mars_deletion_svc.BackgroundJobs.Interfaces;
 using mars_deletion_svc.DependantResource.Interfaces;
@@ -12,6 +13,8 @@ namespace mars_deletion_svc.MarkSession
 {
     public class MarkSessionHandler : IMarkSessionHandler
     {
+        private const int MaxDelayForJobInSeconds = 60;
+
         private readonly IBackgroundJobsHandler _backgroundJobsHandler;
         private readonly IMarkingServiceClient _markingServiceClient;
         private readonly IDependantResourceHandler _dependantResourceHandler;
@@ -46,6 +49,7 @@ namespace mars_deletion_svc.MarkSession
             var isMarkSessionDeleted = false;
             var taskExecutionDelayInSeconds = 1;
             var restartCount = 0;
+            var stopwatch = new Stopwatch();
 
             while (!isMarkSessionDeleted)
             {
@@ -55,26 +59,31 @@ namespace mars_deletion_svc.MarkSession
                         $"Deletion job for mark session with id: {markSessionId} will start in {taskExecutionDelayInSeconds} second/s, restart count: {restartCount}"
                     );
                     await Task.Delay(TimeSpan.FromSeconds(taskExecutionDelayInSeconds));
+                    stopwatch.Start();
 
                     var markSessionModel = await _markingServiceClient.GetMarkSessionById(markSessionId);
                     await _dependantResourceHandler.DeleteDependantResourcesForMarkSession(markSessionModel);
                     await _markingServiceClient.DeleteEmptyMarkingSession(markSessionId);
 
                     isMarkSessionDeleted = true;
+                    stopwatch.Stop();
                 }
                 catch (MarkSessionDoesNotExistException)
                 {
+                    stopwatch.Stop();
                     isMarkSessionDeleted = true;
                 }
                 catch (Exception e)
                 {
-                    _loggerService.LogBackgroundJobErrorEvent(e);
-                    taskExecutionDelayInSeconds *= 2;
+                    stopwatch.Stop();
+                    _loggerService.LogBackgroundJobErrorEvent(stopwatch.Elapsed.TotalSeconds, e);
+                    taskExecutionDelayInSeconds = taskExecutionDelayInSeconds * 2 % MaxDelayForJobInSeconds;
                     restartCount++;
                 }
             }
-            
+
             _loggerService.LogBackgroundJobInfoEvent(
+                stopwatch.Elapsed.TotalSeconds,
                 $"Deletion job for mark session with id: {markSessionId} completed!"
             );
         }

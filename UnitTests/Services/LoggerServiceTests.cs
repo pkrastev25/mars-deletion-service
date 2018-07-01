@@ -17,7 +17,7 @@ namespace UnitTests.Services
             using (var consoleOutputHelperMocks = new ConsoleHelperMocks(Console.Out))
             {
                 // Act
-                loggerService.LogInfoEvent(messageToWriteToConsole);
+                loggerService.LogInfoEvent(10, messageToWriteToConsole);
 
                 // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
@@ -35,7 +35,7 @@ namespace UnitTests.Services
             using (var consoleOutputHelperMocks = new ConsoleHelperMocks(Console.Error))
             {
                 // Act
-                loggerService.LogInfoWithErrorEvent(messageToWriteToConsole, exception);
+                loggerService.LogInfoWithErrorEvent(10, messageToWriteToConsole, exception);
 
                 // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
@@ -60,6 +60,23 @@ namespace UnitTests.Services
         }
 
         [Fact]
+        public void LogBackgroundJobInfoEvent_StringMessageWithPerformanceMetric_StringMessageIsWrittenToTheConsole()
+        {
+            // Arrange
+            var messageToWriteToConsole = "Some message to the console!";
+            var loggerService = new LoggerService();
+
+            using (var consoleOutputHelperMocks = new ConsoleHelperMocks(Console.Out))
+            {
+                // Act
+                loggerService.LogBackgroundJobInfoEvent(10, messageToWriteToConsole);
+
+                // Assert
+                Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());
+            }
+        }
+
+        [Fact]
         public void LogBackgroundJobErrorEvent_StringMessage_StringMessageIsWrittenToTheConsole()
         {
             // Arrange
@@ -69,7 +86,7 @@ namespace UnitTests.Services
             using (var consoleOutputHelperMocks = new ConsoleHelperMocks(Console.Error))
             {
                 // Act
-                loggerService.LogBackgroundJobErrorEvent(new Exception(messageToWriteToConsole));
+                loggerService.LogBackgroundJobErrorEvent(10, new Exception(messageToWriteToConsole));
 
                 // Assert
                 Assert.Contains(messageToWriteToConsole, consoleOutputHelperMocks.GetOuput());

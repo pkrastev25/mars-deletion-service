@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using mars_deletion_svc.Exceptions;
 using mars_deletion_svc.Services.Inerfaces;
@@ -29,17 +30,25 @@ namespace mars_deletion_svc.Middlewares
             HttpContext httpContext
         )
         {
+            var stopwatch = Stopwatch.StartNew();
+            
             try
             {
                 await _requestDelegate(httpContext);
+                
+                stopwatch.Stop();
                 _loggerService.LogInfoEvent(
+                    stopwatch.Elapsed.TotalSeconds,
                     CreateRequestAndResponseMessage(httpContext)
                 );
             }
             catch (Exception e)
             {
+                stopwatch.Stop();
+                
                 await HandleException(httpContext, e);
                 _loggerService.LogInfoWithErrorEvent(
+                    stopwatch.Elapsed.TotalSeconds,
                     CreateRequestAndResponseMessage(httpContext),
                     e
                 );

@@ -5,10 +5,12 @@ namespace mars_deletion_svc.Services.Inerfaces
     public interface ILoggerService
     {
         void LogInfoEvent(
+            double performanceMetricInSeconds,
             string message
         );
         
         void LogInfoWithErrorEvent(
+            double performanceMetricInSeconds,
             string message,
             Exception exception
         );
@@ -16,8 +18,14 @@ namespace mars_deletion_svc.Services.Inerfaces
         void LogBackgroundJobInfoEvent(
             string message
         );
+        
+        void LogBackgroundJobInfoEvent(
+            double performanceMetricInSeconds,
+            string message
+        );
 
         void LogBackgroundJobErrorEvent(
+            double performanceMetricInSeconds,
             Exception error
         );
 

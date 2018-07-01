@@ -6,13 +6,15 @@ namespace mars_deletion_svc.Services
     public class LoggerService : ILoggerService
     {
         public void LogInfoEvent(
+            double performanceMetricInSeconds,
             string message
         )
         {
-            Console.WriteLine($"{IncludeTimestamp()} [INFO] {message}");
+            Console.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [INFO] {message}");
         }
 
         public void LogInfoWithErrorEvent(
+            double performanceMetricInSeconds,
             string message,
             Exception error
         )
@@ -20,9 +22,17 @@ namespace mars_deletion_svc.Services
             var errorMessage = error.InnerException == null
                 ? $"[ERROR] {error.Message}\n{error.StackTrace}"
                 : $"[ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}";
-            Console.Error.WriteLine($"{IncludeTimestamp()} [INFO] {message}\n{errorMessage}");
+            Console.Error.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [INFO] {message}\n{errorMessage}");
         }
 
+        public void LogBackgroundJobInfoEvent(
+            double performanceMetricInSeconds,
+            string message
+        )
+        {
+            Console.WriteLine($"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][INFO] {message}");
+        }
+        
         public void LogBackgroundJobInfoEvent(
             string message
         )
@@ -31,13 +41,14 @@ namespace mars_deletion_svc.Services
         }
 
         public void LogBackgroundJobErrorEvent(
+            double performanceMetricInSeconds,
             Exception error
         )
         {
             Console.Error.WriteLine(
                 error.InnerException == null
-                    ? $"{IncludeTimestamp()} [JOB][ERROR] {error.Message}\n{error.StackTrace}"
-                    : $"{IncludeTimestamp()} [JOB][ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}"
+                    ? $"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][ERROR] {error.Message}\n{error.StackTrace}"
+                    : $"{IncludeTimestamp()} |{performanceMetricInSeconds}s| [JOB][ERROR] {error.Message} {error.InnerException.Message}\n{error.StackTrace}"
             );
         }
 
