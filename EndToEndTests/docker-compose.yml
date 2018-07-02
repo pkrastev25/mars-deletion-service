@@ -90,7 +90,7 @@ services:
       - 8080
 
   scenario-svc:
-    image: docker-hub.informatik.haw-hamburg.de/mars/mars-scenario-svc/scenario-svc:latest
+    image: nexus.informatik.haw-hamburg.de/scenario-svc:latest
     links:
       - mongodb
     depends_on:
@@ -137,7 +137,7 @@ services:
       - 8090
       
   marking-svc:
-    image: docker-hub.informatik.haw-hamburg.de/mars/mars-marking-svc/marking-svc:latest
+    image: nexus.informatik.haw-hamburg.de/marking-svc:latest
     environment:
       - PROJECT_SVC_URL=project-svc:8080
       - SCENARIO_SVC_URL=scenario-svc:8080
