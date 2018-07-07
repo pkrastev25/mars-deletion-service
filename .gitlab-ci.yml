@@ -5,7 +5,6 @@ stages:
   - createDeletionSvcTestEnvironment
   # The Gitlab CI pipeline is very slow for running these tests. Better run them locally
   - integrationTests
-  - endToEndTests
   - deploy
 
 variables:
@@ -63,20 +62,6 @@ integrationTests:
     - k8s
   script:
     - cd IntegrationTests
-    - docker login -u $NEXUS_USER -p $NEXUS_PW $NEXUS_CACHE
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $GITLAB_REGISTRY
-    - docker-compose run deletion-svc-tests
-
-endToEndTests:
-  when: manual
-  stage: endToEndTests
-  image: $NEXUS_CACHE/deletion-svc-test-env
-  services:
-    - $NEXUS_CACHE/docker:icc-dind
-  tags:
-    - k8s
-  script:
-    - cd EndToEndTests
     - docker login -u $NEXUS_USER -p $NEXUS_PW $NEXUS_CACHE
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $GITLAB_REGISTRY
     - docker-compose run deletion-svc-tests

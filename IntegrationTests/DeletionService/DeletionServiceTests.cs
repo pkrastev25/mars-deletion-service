@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
-namespace EndToEndTests
+namespace IntegrationTests.DeletionService
 {
-    public class DeletionAndMarkingServicesTests
+    public class DeletionServiceTests
     {
         private readonly HttpClient _deletionServiceClient;
 
-        public DeletionAndMarkingServicesTests()
+        public DeletionServiceTests()
         {
             var deletionServiceServer = new TestServer(
                 new WebHostBuilder().UseStartup<Startup>()
@@ -29,8 +29,8 @@ namespace EndToEndTests
         {
             // Arrange
             var resourceType = ResourceTypeEnum.Metadata;
-            var resourceId = "45db3205-83be-42a1-af14-6a03df9d9536";
-            var projectId = "73fcb3bf-bc8b-4c8b-801f-8a90d92bf9c2";
+            var resourceId = "9812b85c-aac7-4d20-bfb8-a3bd9b9292de";
+            var projectId = "f3aced7f-d27f-4694-b5e7-5ed40d4944f7";
             var httpClient = new HttpClient();
 
             // Act
