@@ -51,7 +51,14 @@ namespace mars_deletion_svc.Services
                         break;
                     }
 
-                    await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
+                    try
+                    {
+                        await _markSessionHandler.DeleteMarkSessionAndDependantResources(markSessionModel);
+                    }
+                    catch (Exception e)
+                    {
+                        _loggerService.LogStartupErrorEvent(e);
+                    }
                 }
             }
             catch (Exception e)

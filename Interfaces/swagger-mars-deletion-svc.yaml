@@ -1,0 +1,124 @@
+swagger: "2.0"
+info:
+  title: marking-svc REST API
+  version: "1.0"
+
+host: marking-svc
+schemes:
+  - http
+
+paths:
+  /api/delete/{resourceType}/{resourceId}:
+    delete:
+      description: >
+        Attempts to delete the resource specified with resourceType and resourceId together will all dependent resources. An exception is the project resource! It is not deleted!
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          type: string
+          enum: [project, metadata, scenario, resultConfig, simPlan, simRun, resultData]
+        - name: resourceId
+          in: path
+          required: true
+          type: string
+          format: UUID
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          format: UUID
+      responses:
+        202:
+          description: >
+            A background job has been successfully scheduled to delete the resources. The backgroundJobId is returned.
+          schema:
+            title: backgroundJobId
+            type: string
+            format: UUID
+        400:
+          description: >
+            Missing or wrong input parameters have been supplied to the request (e.g. resourceType, resourceId, projectId)
+          schema:
+            title: message
+            type: string
+        409:
+          description: >
+            The deletion process could not take place. Reasons could be some of the following
+            1. Someone else is already manipulating the same resources
+            2. Someone else is already manipulating part of the dependent resources
+          schema:
+            $ref: "#/definitions/ErrorMessageModel"
+        500:
+          description: >
+            Some error occurred within the service
+          schema:
+            $ref: "#/definitions/ErrorMessageModel"
+            
+  /api/delete/markSession/{markSessionId}:
+    delete:
+      description: >
+        Transfers ownership of a mark session from any other service to the deletion service. Afterwards, the dependent resources within the mark session are deleted then the mark session is deleted as well.
+      parameters: 
+        - name: markSessionId
+          in: path
+          required: true
+          type: string
+          format: UUID
+      responses:
+        202:
+          description: >
+            A background job has been successfully scheduled to delete the resources. The backgroundJobId is returned.
+          schema:
+            title: backgroundJobId
+            type: string
+            format: UUID
+        500:
+          description: >
+            Some error occurred within the service
+          schema:
+            $ref: "#/definitions/ErrorMessageModel"
+    
+  /api/backgroundjob/{backgroundJobId}/status:
+    get:
+      description: Retrieves the state information for a background job.
+      parameters: 
+        - name: backgroundJobId
+          in: path
+          required: true
+          type: string
+          format: UUID
+      responses:
+        200:
+          description: Successfully retrived the state information about a background job.
+          schema:
+            title: state
+            enum: [Processing, Done]
+            type: string
+        204:
+          description: There is no information about the background job. The assumption can be made that the background job completed.
+        500:
+          description: >
+            Some error occurred within the service
+          schema:
+            $ref: "#/definitions/ErrorMessageModel"
+    
+  /healthz:
+    get:
+      description: Use to check the availability of the deletion service. This could be also used internally by Kubernetes.
+      responses:
+        200:
+          description: OK
+          schema:
+            title: message
+            type: string
+
+definitions:
+  ErrorMessageModel:
+    type: object
+    properties:
+      error:
+        title: message
+        type: string
+        description: Contains the error message
+

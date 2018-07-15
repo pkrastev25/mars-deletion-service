@@ -12,7 +12,7 @@ namespace IntegrationTests.MarkingService
     public class MarkingServiceClientTests
     {
         [Fact]
-        public async void CreateMarkSession_UnmarkedResources_ReturnsMarkSessionModel()
+        public async void CreateMarkSession_NotMarkedResources_ReturnsMarkSessionModel()
         {
             // Arrange
             var resourceType = ResourceTypeEnum.Metadata;

@@ -65,8 +65,8 @@ namespace mars_deletion_svc.MarkSession
                     await _dependantResourceHandler.DeleteDependantResourcesForMarkSession(markSessionModel);
                     await _markingServiceClient.DeleteEmptyMarkingSession(markSessionId);
 
-                    isMarkSessionDeleted = true;
                     stopwatch.Stop();
+                    isMarkSessionDeleted = true;
                 }
                 catch (MarkSessionDoesNotExistException)
                 {
