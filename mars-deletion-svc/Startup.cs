@@ -50,10 +50,16 @@ namespace mars_deletion_svc
             services.AddMvc();
 
             // Hangfire config
+            var hangfireMigrationOptions = new MongoMigrationOptions
+            {
+                Strategy = MongoMigrationStrategy.Drop,
+                BackupStrategy = MongoBackupStrategy.Collections
+            };
             var hangfireStorageOptions = new MongoStorageOptions
             {
                 // The time interval after which Hangfire will re-enqueue aborted or failed jobs if the server dies unexpectedly
-                InvisibilityTimeout = TimeSpan.FromMinutes(1)
+                InvisibilityTimeout = TimeSpan.FromMinutes(1),
+                MigrationOptions = hangfireMigrationOptions
             };
             services.AddHangfire(configuration =>
             {
